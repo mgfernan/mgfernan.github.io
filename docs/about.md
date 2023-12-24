@@ -24,4 +24,9 @@ Coñécenme por ser un enxeñeiro de sistemas de navegación (GPS para os profan
 [![BoardGameGeek](https://img.shields.io/badge/BoardGameGeek-Discover-cf8525?style=flat&logo=boardgamegeek)](https://boardgamegeek.com/user/Tryskele)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/miquelgarcia/)
 
+Si voleu seguir el canal de creació de jocs que tinc a Telegram, aquí us deixo
+el link:
+
+[![Els jocs de la trisquela](https://img.shields.io/badge/Els%20jocs%20de%20la%20trisquela-a%20Telegram-blue?style=flat&logo=telegram)](https://t.me/+TNSVpWdLw2V_FyIF)
+
 Em sap greu, però sóc un boomer i no tinc ni Instaflop ni Tak tuk.
