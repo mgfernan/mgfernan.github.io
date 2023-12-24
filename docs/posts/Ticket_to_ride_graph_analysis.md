@@ -8,7 +8,7 @@ categories:
 
 # Graph theory to model Ticket to ride
 
-This post contains a basic analysis of the mathmaticam model behind the board game [Ticket to Ride](https://boardgamegeek.com/boardgame/9209/ticket-ride) by leveraging graph theory.
+This post contains a basic analysis of the mathematical model behind the board game [Ticket to Ride](https://boardgamegeek.com/boardgame/9209/ticket-ride) by leveraging graph theory.
 
 As you know, "Ticket to Ride" is a game where players aim at completing train routes in the most efficient way possible. The first version of the game is set in the United States of America in the late 19th century during the railroad expansion.
 
