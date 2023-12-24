@@ -1,6 +1,9 @@
-# Welcome to my blog
+# Benvinguts, paseu, paseu!
 
-Here you will find some stuff, both interesting and boring, up to you.
+Aquí trobaràs algunes coses, tant poden ser interessants com avorrides, depèn de tu.
 
-Also, you will find also a mixture of languages (mostly English, but also Catalan,
-Spanish and Galician), but I guess you can always use Google Translate :wink:.
+A més, per complicar-ho una mica, hi ha una barreja de llengües bastant considerable
+(anglès, català, espanyol i gallec), però suposo que sempre pots fer servir Google Translate
+si t'interessa algun contingut que estigui en un idioma que no domines :wink:.
+
+Per cert, encara no saps que és una trisquela? doncs ja saps, la [viquipèdia *rules*](https://ca.wikipedia.org/wiki/Trisquela)!

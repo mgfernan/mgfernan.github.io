@@ -1,8 +1,14 @@
-site_name: Mgfernan's blog
+site_name: Saps què és una trisquela?
 
+site_url: https://mgfernan.com/
+nav:
+  - Home: index.md
+  - About me: about.md
 
 theme:
   name: material
+  logo: assets/tryskele.png
+favicon: favicon.ico
 
 plugins:
   - blog:
@@ -13,3 +19,10 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
