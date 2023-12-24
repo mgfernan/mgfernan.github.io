@@ -1,0 +1,10 @@
+{
+  "name": "Jekyll",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ] ,
+  "workspaceFolder": "/blog/",
+
+  "service": "jekyll"
+
+}
