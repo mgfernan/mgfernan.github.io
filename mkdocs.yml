@@ -13,6 +13,11 @@ plugins:
   - blog:
       blog_dir: .
 
+extra:
+  analytics:
+    provider: google
+    property: G-802SVFWTGL
+
 markdown_extensions:
   - attr_list
   - pymdownx.emoji:
