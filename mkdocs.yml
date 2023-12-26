@@ -1,4 +1,5 @@
 site_name: Saps què és una trisquela?
+site_url: https://mgfernan.com
 
 nav:
   - Home: index.md
@@ -10,6 +11,7 @@ theme:
 favicon: favicon.ico
 
 plugins:
+  - social
   - blog:
       blog_dir: .
 
