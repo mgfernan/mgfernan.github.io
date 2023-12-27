@@ -1,9 +1,13 @@
 ---
 date: 2023-12-24
+description: How to use Graph theory to build a model for the Ticket to ride boardgame as a first step towards customization and create your own maps
 categories:
   - Jocs de taula
   - Board games
   - English
+social:
+  cards_layout_options:
+    background_image: ../assets/output_8_0.png
 ---
 
 # Graph theory to model Ticket to ride
