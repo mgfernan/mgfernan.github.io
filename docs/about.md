@@ -28,5 +28,6 @@ Si voleu seguir el canal de creació de jocs que tinc a Telegram, aquí us deixo
 el link:
 
 [![Els jocs de la trisquela](https://img.shields.io/badge/Els%20jocs%20de%20la%20trisquela-a%20Telegram-blue?style=flat&logo=telegram)](https://t.me/+TNSVpWdLw2V_FyIF)
+[![Els jocs de la trisquela](https://img.shields.io/badge/Els%20jocs%20de%20la%20trisquela-a%20Whatsapp-green?style=flat&logo=whatsapp)](https://chat.whatsapp.com/F2qRgrHnC8v86ZL4ue40LW)
 
 Em sap greu, però sóc un boomer i no tinc ni Instaflop ni Tak tuk.
