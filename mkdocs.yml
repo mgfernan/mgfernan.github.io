@@ -18,7 +18,7 @@ plugins:
 extra:
   analytics:
     provider: google
-    property: G-802SVFWTGL
+    property: G-J0Q5PFB35Q
 
 markdown_extensions:
   - attr_list
