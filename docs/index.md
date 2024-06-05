@@ -7,3 +7,5 @@ A més, per complicar-ho una mica, hi ha una barreja de llengües bastant consid
 si t'interessa algun contingut que estigui en un idioma que no domines :wink:.
 
 Per cert, encara no saps que és una trisquela? doncs ja saps, la [viquipèdia *rules*](https://ca.wikipedia.org/wiki/Trisquela)!
+
+<a rel="me" href="https://mastodon.social/@mgfernan">@mgfernan a Mastodon</a>
