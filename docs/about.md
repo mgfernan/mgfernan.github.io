@@ -20,7 +20,7 @@ Coñécenme por ser un enxeñeiro de sistemas de navegación (GPS para os profan
 
 ## Em podeu trobar per aqui
 
-[![Mastodon Follow](https://img.shields.io/mastodon/follow/mgfernan)](https://mastodon.social/@mgfernan)
+[![Mastodon Follow](https://img.shields.io/mastodon/follow/112557226124179626)](https://mastodon.social/@mgfernan)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-1da1f2?style=flat&logo=twitter)](https://www.twitter.com/miquelgarciaf)
 [![BoardGameGeek](https://img.shields.io/badge/BoardGameGeek-Discover-cf8525?style=flat&logo=boardgamegeek)](https://boardgamegeek.com/user/Tryskele)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/miquelgarcia/)
