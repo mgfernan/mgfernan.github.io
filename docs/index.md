@@ -8,8 +8,6 @@ si t'interessa algun contingut que estigui en un idioma que no domines :wink:.
 
 Per cert, encara no saps que és una trisquela? doncs ja saps, la [viquipèdia *rules*](https://ca.wikipedia.org/wiki/Trisquela)!
 
-## Em podeu trobar per aqui
-
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/112557226124179626)](https://mastodon.social/@mgfernan)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-1da1f2?style=flat&logo=twitter)](https://www.twitter.com/miquelgarciaf)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/miquelgarcia/)
