@@ -20,6 +20,17 @@ extra:
   analytics:
     provider: google
     property: G-J0Q5PFB35Q
+  social:
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/cronocartes/
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/miquelgarciaf
+    - icon: fontawesome/brands/mastodon
+      link: https://mastodon.social/@mgfernan
+    - icon: fontawesome/brands/github
+      link: https://github.com/mgfernan/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/miquelgarcia/
 
 markdown_extensions:
   - attr_list
