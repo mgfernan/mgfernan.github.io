@@ -4,7 +4,7 @@ site_url: https://mgfernan.com
 nav:
   - Home: index.md
   - About me: about.md
-#  - Cronocartes: cronocartes.md
+  - Cronocartes: cronocartes.md
 
 theme:
   name: material

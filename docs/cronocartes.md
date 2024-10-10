@@ -1,26 +1,66 @@
 # Cronocartes Història de Catalunya
 
-Descobreix la rica història de Catalunya a través del joc de cartes educatiu i
-emocionant, **Cronocartes**. Una experiència única que et transportarà a diferents
-èpoques clau de Catalunya mentre competiu amb amics per construir la línia temporal
-sense errades.
+Descobreix la història de Catalunya a través del joc de cartes, **Cronocartes**,
+on historiadors rivals competiran per demostrar el seu coneixement de la història
+de Catalunya.
 
-## Què és Cronocartes?
+**Cronocartes** és un joc de cartes ràpid i familiar: només necessiteu 30 segons
+per aprendre a jugar i les partides no acostumen a durar més de 20 minuts.
+Molts adults tenen por de jugar per vergonya a una suposada ignorància en temes
+històrics, però ja veureu com no n'hi ha per a tant! Us divertireu!
 
-*Cronocartes* és un joc de cartes ràpid, familiar. Només es necessiten 30 segons
-per aprendre a jugar.
+![Cartes](./assets/cronocartes/catalunya_cartes.png)
 
-És una manera divertida d'aprendre sobre la història de Catalunya, que joc fomenta l'aprenentatge de la nostra història d'una manera divertida.
-Juga amb nens, adolescents i adults; *Cronocartes* és una experiència educativa per a tothom!
+## Com es juga
 
-## Com Jugar:
+Trobareu les instruccions en una de les cartes de la mateixa baralla:
 
-1. **Triomfa en les Rondes:** Organitza les cartes en ordre cronològic i guanya rondes per acumular punts.
-2. **Desafia els Altres Jugadors:** Enfronta't als teus amics en partides emocionants i demostreu qui té el millor coneixement històric.
-3. **Aprofundeix en la Història:** Cada carta és una oportunitat per aprendre nous detalls sobre la rica història de Catalunya.
+|![Regles Anvers](./assets/cronocartes/catalunya_regles_1.png) | ![Regles Revers](./assets/cronocartes/catalunya_regles_2.png) |
+|:----:|:-----:|
 
-## Comença la Teva Aventura Històrica
+### Preparació
 
-*Cronocartes: Història de Catalunya* és molt més que un joc; és una oportunitat de connectar amb el passat i entendre millor el present. Endinsa't en aquest repte històric amb amics i família.
+Seguiu aquests passos per preparar la partida:
 
-Comença a explorar la història de Catalunya de manera divertida i educativa amb *Cronocartes*!
+1. Mescleu bé les cartes i repartiu-ne 7 a cada historiador cara avall (per la
+cara que no mostra l'any).
+2. Un cop repartides les cartes, preneu la carta superior de la pila de cartes
+restant i poseu-la cara amunt de tal manera que l'any ha de quedar a la vista.
+Aquesta serà la carta inicial de la línia temporal.
+
+Ja esteu a punt per començar!
+
+### El teu torn
+
+En el teu torn hauràs d'agafar una de les teves cartes que estan cara avall i
+col·locar-la a la línia temporal, on creguis que respecta l'ordre cronològic.
+Després d'haver-te decidit, gira la carta. En aquest moment poden passar dues coses:
+
+- La carta respecta l'ordre cronològic (ben fet!👏), deixa la carta a la línia temporal.
+- La carta no respecta l'ordre cronològic (t'has equivocat!😥), descarta la carta i pre-ne una altra de la pila de cartes.
+
+Un cop hagis resolt un d'aquests casos, passa el torn al/la següent historiador/a.
+
+### Final del joc
+
+En el moment en què un/a historiador/a col·loca correctament la seva última carta,
+es dispara el final del joc i s'acaba la ronda (per tal que tots els/les historiadors/es
+hagin jugat el mateix nombre de torns).
+
+Al final de l'última ronda, el jugador que s'hagi quedat sense cartes guanya la partida!
+
+En cas que a l'última ronda hagi hagut un **empat** i més d'un/a historiador/a hagi
+acabat les seves cartes, la victòria es decidirà per mort sobtada: s'aniran jugant cartes
+i els/les finalistes quedaran eliminats en cas de col·locar incorrectament una carta.
+
+### Variant avançada
+
+Si voleu fer el joc una mica més difícil, en comptes de descartar la carta en cas
+d'equivocació, col·loqueu-la correctament a la línia temporal.
+
+### Estratègia
+
+**Un consell**: tot i que esteu temptats a col·locar primer les cartes que sabeu,
+heu de fer precisament el contrari! Jugueu primer les que són més dubtoses. Si
+no ho feu així, a mesura que la línia temporal es vagi poblant de cartes, us
+serà més difícil afinar l'any i la probabilitat d'equivocar-se serà més alta.
