@@ -9,13 +9,13 @@ per aprendre a jugar i les partides no acostumen a durar més de 20 minuts.
 Molts adults tenen por de jugar per vergonya a una suposada ignorància en temes
 històrics, però ja veureu com no n'hi ha per a tant! Us divertireu!
 
-![Cartes](./assets/cronocartes/catalunya_cartes.png)
+![Cartes](../assets/cronocartes/catalunya_cartes.png)
 
 ## Com es juga
 
 Trobareu les instruccions en una de les cartes de la mateixa baralla:
 
-|![Regles Anvers](./assets/cronocartes/catalunya_regles_1.png) | ![Regles Revers](./assets/cronocartes/catalunya_regles_2.png) |
+|![Regles Anvers](../assets/cronocartes/catalunya_regles_1.png) | ![Regles Revers](../assets/cronocartes/catalunya_regles_2.png) |
 |:----:|:-----:|
 
 ### Preparació
