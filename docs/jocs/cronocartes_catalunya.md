@@ -9,6 +9,8 @@ per aprendre a jugar i les partides no acostumen a durar més de 20 minuts.
 Molts adults tenen por de jugar per vergonya a una suposada ignorància en temes
 històrics, però ja veureu com no n'hi ha per a tant! Us divertireu!
 
+[![Static Badge](https://img.shields.io/badge/enlla%C3%A7_del_joc_a_la-boardgamegeek-orange)](https://boardgamegeek.com/boardgame/326235/cronocartes-historia-de-catalunya)
+
 ![Cartes](../assets/cronocartes/catalunya_cartes.png)
 
 ## Com es juga
