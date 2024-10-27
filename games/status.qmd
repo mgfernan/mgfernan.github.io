@@ -1,0 +1,89 @@
+---
+title: "Desenvolupament de jocs"
+reference-location: margin
+toc: true
+toc-location: left
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+L'estat de desenvolupament de les diferents idees o projectes relacionats amb
+els jocs de taula que tinc entre mans està resumit en aquest diagrama que teniu
+abaix i, que, com no podia ser d'una altra manera, l'he fet amb Python i he
+incrustat el codi aquí abaix per si teniu curiositat.
+
+```{python}
+import numpy as np
+import plotly.graph_objects as go
+
+PROJECT_DATA = [
+  ("Aventureiros ó tren, Galicia", 0.4, "Playtesting"),
+  ("Código Segredo", 0.9, "Primera versión completa, PnP na boardgamegeek"),
+  ("Cronocartas Historia de Galicia", 0.7, "En preproducción"),
+  ("Cronocartes Història de Catalunya", 1.0, "Disponible"),
+
+]
+
+# Create a figure
+fig = go.Figure()
+
+# Set up bar parameters
+bar_width = 0.35
+bar_height = 0.1
+gap_between_bars = 0.05
+num_bars = len(PROJECT_DATA)
+
+# Calculate bar positions and widths
+bar_positions = np.arange(num_bars) * (bar_width + gap_between_bars) + bar_width / 2
+bar_widths = [bar_width] * num_bars
+
+# Create foreground bars with rounded corners and slightly smaller width
+for i in range(num_bars):
+    completion_rate = PROJECT_DATA[i][1]
+    hover_text = PROJECT_DATA[i][2]
+
+    fig.add_trace(go.Bar(
+        x=[completion_rate],
+        y=[bar_positions[i]],
+        width=bar_widths[i] * 0.8,
+        orientation='h',
+        marker=dict(color='#14a2ff', line=dict(width=1, color='#0072bd'), cornerradius=10),
+        hovertext=hover_text,
+        hoverinfo='text',
+    ))
+
+# Add project names within bars, left-justified
+for i in range(num_bars):
+    project_name = PROJECT_DATA[i][0]
+    x = PROJECT_DATA[i][1]
+    fig.add_annotation(
+        x = 0.02,
+        y = bar_positions[i],
+        text = project_name,
+        showarrow = False,
+        xanchor="left",
+        font=dict(color="white", size=11),
+    )
+
+# Set up plot appearance
+fig.update_layout(
+    xaxis=dict(range=[0, 1], tickvals=[0, 0.25, 0.5, 0.75, 1], ticktext=['0%', '25%', '50%', '75%', '100%']),
+    yaxis=None,
+    #margin=dict(l=0, r=0, b=0, t=30),
+    showlegend=False,
+    autosize=False,
+    width=500,
+    height=200,
+)
+fig.update_yaxes(showticklabels=False)
+fig.layout.xaxis.fixedrange = True
+fig.layout.yaxis.fixedrange = True
+fig.select_annotations
+
+# Show the plot
+fig.show()
+
+```
+

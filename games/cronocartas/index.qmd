@@ -1,0 +1,10 @@
+---
+title: Cronocartas Historia de Galicia
+format: html
+reference-location: margin
+toc: true
+toc-location: left
+---
+
+
+This is a test

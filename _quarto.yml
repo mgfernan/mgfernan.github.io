@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "mgfernan"
+  navbar:
+
+    right:
+      - about.qmd
+      - text: "Jocs"
+        menu:
+        - games/status.qmd
+        - games/cronocartes/index.qmd
+        - games/cronocartas/index.qmd
+      - icon: github
+        href: https://github.com/mgfernan
+      - icon: instagram
+        href: https://instagram.com/cronocartes
+format:
+  html:
+    theme: cosmo
+    css: styles.css
