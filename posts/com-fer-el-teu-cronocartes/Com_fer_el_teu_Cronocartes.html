@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-02-02">
+<meta name="description" content="Apunts per crear la teva versió del joc de cartes històric Cronocartes">
 
-<title>Benvinguts! passeu, passeu! – mgfernan</title>
+<title>Com fer el teu Cronocartes – mgfernan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">mgfernan</span>
     </a>
   </div>
@@ -149,7 +91,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -158,15 +100,15 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-jocs">    
         <li>
-    <a class="dropdown-item" href="./games/status.html">
+    <a class="dropdown-item" href="../../games/status.html">
  <span class="dropdown-text">Desenvolupament de jocs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./games/cronocartes/index.html">
+    <a class="dropdown-item" href="../../games/cronocartes/index.html">
  <span class="dropdown-text">Cronocartes Història de Catalunya</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./games/cronocartas/index.html">
+    <a class="dropdown-item" href="../../games/cronocartas/index.html">
  <span class="dropdown-text">Cronocartas Historia de Galicia</span></a>
   </li>  
     </ul>
@@ -191,156 +133,145 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Benvinguts! passeu, passeu!</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Com fer el teu Cronocartes</h1>
+                  <div>
+        <div class="description">
+          Apunts per crear la teva versió del joc de cartes històric Cronocartes
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Jocs de taula</div>
+                <div class="quarto-category">Català</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 2, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Català">Català <span class="quarto-category-count">(1)</span></div><div class="category" data-category="English">English <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Galego">Galego <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Jocs de taula">Jocs de taula <span class="quarto-category-count">(2)</span></div><div class="category" data-category="games">games <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Català</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">English</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Aquí trobaràs contingut molt variat; desde sistemes de posicionament global (GNSS), desenvolupament de software, algoritmes i jocs de taula. Pot ser que sigui interessants o avorrides, depèn de tu.</p>
-<p>A més, per complicar-ho una mica, hi ha una barreja de llengües bastant considerable (anglès, català, espanyol i gallec), però suposo que sempre pots fer servir Google Translate si t’interessa algun contingut que estigui en un idioma que no domines 😉.</p>
+<p>El joc <a href="https://boardgamegeek.com/boardgame/326235/cronocartes-historia-de-catalunya">Cronocartes Història de Catalunya</a> és un joc de cartes ràpid i familiar en què els jugadors competeixen ordenant una línia cronològica. Està basat en els populars jocs de cartes <a href="https://boardgamegeek.com/boardgame/128664/timeline">Timeline</a> o <a href="https://boardgamegeek.com/boardgame/130882/cardline-animals">Cardline</a>.</p>
+<p>El joc és fàcilment portable a altres temes que requereixin una cronologia (moments èpics de la saga <a href="https://boardgamegeek.com/boardgame/183797/timeline-star-wars">Star Wars</a>, història del barri de Sants de Barcelona…). De fet, diverses persones interessades en el format m’han preguntat per consells de com fer una versió del Cronocartes, així que us deixo aquest post amb alguns apunts i consells sobre el disseny per si us poden ser útils.</p>
+<!-- more -->
+<section id="comença-la-casa-pel-terrat" class="level2">
+<h2 class="anchored" data-anchor-id="comença-la-casa-pel-terrat">Comença la casa pel terrat</h2>
+<p>No sóc dissenyador gràfic, i una de les pors més grans que tenia era fer un disseny que després hagués d’anar modificant en funció del servei d’impremta. Així que, un cop decidit a fer la versió catalana del Cronocartes, vaig buscar un servei d’impremta que tingués aquestes característiques:</p>
+<ul>
+<li>Poder tenir un pressupost immediat via web, sense haver d’enviar formularis web, i fer-me una idea ràpida de quan pujaria el cost més important de la producció.</li>
+<li>Que oferissin la mateixa mida de cartes que el Timeline per tal de poder-les combinar (Mini USA 41 x 63 mm)</li>
+<li>Disponibilitat de descàrrega de la plantilla per fer les cartes.</li>
+<li>Format de la plantilla suportat per algun programari lliure (mireu la secció <a href="#eines">Eines</a> avall).</li>
+</ul>
+<p>La que vaig acabar escollint era <a href="https://www.tipia.es/ludotipia">Ludotipia</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, i amb aquesta decisió va quedar fixat:</p>
+<ul>
+<li>El número total de cartes: <strong>108</strong> (l’aplicatiu web dóna diverses opcions, i aquesta era la més propera a jocs similars)</li>
+<li>La <a href="https://www.tipia.es/_files/ugd/f4b6f7_9299a0b3540f404bba309bff86549202.pdf">plantilla</a> per maquetar les cartes, amb tots els marges necessaris. Teniu una imatge de la plantilla abaix tot i que us recomano que treballeu amb el PDF original per que no tingueu sorpreses amb les mides quan genereu els fitxers finals.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="plantilla_tipia.png" class="img-fluid figure-img"></p>
+<figcaption>Plantilla Tipia</figcaption>
+</figure>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Here you will find a medley of content; from navigation systems (GNSS), software development, algorithms and board games. They can be both interesting or boring, at the end this is up to you.</p>
-<p>In addition, to make things a bit more complicated, there is a considerable mix of languages (English, Catalan, Spanish, and Galician), but I suppose you can always use Google Translate if you’re interested in any content that’s in a language you’re not fluent in 😉.</p>
+</section>
+<section id="eines" class="level2">
+<h2 class="anchored" data-anchor-id="eines">Eines</h2>
+<p>Els programes de disseny gràfic com Adobe Photoshop i similars acostumen a estar fora del pressupost dels dissenyadors aficionats, pel que la opció de programari lliure és la opció més econòmica. De fet, són eines que cobreixen amb escreix les tasques que s’han de realitzar. Us passo a continuació una relació de les eines que he utilitzat i l’ús que li he donat:</p>
+<ul>
+<li><a href="https://www.scribus.net/">Scribus</a> és una aplicatiu d’escriptori per autoedició que he utilitzat per maquetar les cartes. Una de les característiques fonamentals d’aquesta aplicació és que permet fer el que es coneix com a “mail-merge”: generar totes les cartes d’una manera automàtica, ràpida i senzilla a través d’una sola plantilla i un fitxer de text en format Comma Separated Value (CSV) que conté totes les dades de cadascuna de les cartes.</li>
+<li><a href="https://www.libreoffice.org/discover/calc/">LibreOffice Calc</a> per editar fulles de càlcul i guardar-les en format CSV. La idea és generar un fitxer en que cada fila contingui títol, any i imatge per cada carta. Amb aquest fitxer i la plantilla de maquetació es poden generar totes les cartes de la baralla (i no haver d’anar muntant les cartes una a una). Al ser fitxers de text, la veritat és que hi han moltes alternatives per editar CSV: si ets programador, pots utilitzar <a href="https://code.visualstudio.com/">VS Code</a> amb l’extensió <a href="https://edit-csv.net">Edit CSV</a>.</li>
+<li><a href="https://www.gimp.org/">Gimp</a>, programari lliure d’edició gràfica, indispensable per manipular les imatges (sobretot escalat, rotacions, <em>crop</em>, manipulació de colors i filtrat d’imatges, …)</li>
+</ul>
+<p>El sistema operatiu que utilitzo és Ubuntu/Linux, però tot aquest programari té versions per altres sistemes operatius.</p>
+</section>
+<section id="events" class="level2">
+<h2 class="anchored" data-anchor-id="events">Events</h2>
+<p>Juntament amb la creació de les <a href="#imatges">Imatges</a>, el llistat d’events és el més complicat. Encara que no ho sembli, buscar 100 events històrics que estiguin documentats i més o menys distribuïts en els 2000 anys d’història pot ser complicat. En el cas del Cronocartes Història de Catalunya vaig tenir en compte els següents punts:</p>
+<ul>
+<li>Volia afegir un punt de complexitat així que la majoria de cartes estan concentrades a finals del segle XIX i principis del XX.</li>
+<li>Trobar events del primer mil·leni pot ser un repte per que no hi han gaires referències escrites (a excepció d’events clau com guerres, tractats o revoltes).</li>
+<li>Hi ha vegades én que és impossible saber l’any exacte d’un event. En aquests casos podeu posar una <em>c.</em> (del llatí <em>circa</em>, aproximadament) abans de l’any. Una altra alternativa més fàcil d’interpretar pot ser <em>~</em>.</li>
+<li>Si us costa trobar la data d’algun event, opteu per posar la primera referència escrita sobre l’event (el cas paradigmàtic del Cronocartes Història de Catalunya és el <em>Mató</em>, sabeu de quin any es té la primera referència? 😜)</li>
+<li>L’espai pel text de l’event és reduït (més del que sembla). Haureu de ser creatius per reduir el nombre de caràcters! No dubteu a utilitzar ordinals en comptes de paraules (per exemple <em>1r</em> en comptes de <em>Primer</em>). Algunes vegades he hagut de recórrer a un subtítol (amb un tipus de lletra més petit) en cas que calgués donar una mica més de context, com es mostra en l’exemple que segueix:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pont_del_diable.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Pont del diable, exemple de subtítol</figcaption>
+</figure>
 </div>
-</div>
-</div>
+</section>
+<section id="imatges" class="level2">
+<h2 class="anchored" data-anchor-id="imatges">Imatges</h2>
+<p>Per les imatges de la versió d’Història de Catalunya vaig recórrer a imatges d’internet i alguna composició pròpia. Compteu moltes hores de manipulació d’imatges amb GIMP per acabar d’ajustar-les al format de les cartes. Cal dir que també és una de les parts més creatives del procés, i les possibilitats i eines que dona un programa com GIMP són innumerables.</p>
+<p>Arribats a aquest punt, haureu de vigilar amb els <strong>drets d’autor</strong>, especialment si voleu distribuir comercialment el producte. Assegureu-vos que les imatges es poden utilitzar per finalitats comercials. Si teniu dubtes, considereu altres alternatives. En el meu cas, per altres versions estic utilitzant eines d’intel·ligència artificial que a més agilitzen substancialment el procès de creació d’imatges a partir d’un prompt o una altra imatge (o combinació d’imatges). Les eines que he utilitzat són:</p>
+<ul>
+<li><a href="https://www.krea.ai/">Krea.ai</a>, eina bastant potent que permet generar imatges a partir d’una frase o bé a partir d’altres imatges.</li>
+<li><a href="https://clipdrop.co/uncrop">Uncrop</a>, eina que permet estendre una imatge (<em>uncrop</em>) i arribar a una certa resolució o mida. Molt més útil del que pot semblar a simple vista, sobretot per fotografies antigues amb mida reduïda. A baix incloc un exemple on la imatge original (esquerra) s’ha modificat per estendre-la per la part superior i generar un sostre (imatge de la dreta).</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Imatge original</th>
+<th style="text-align: left;">Imatge <em>uncropped</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="cuina_economica_org.png" class="img-fluid" alt="original"></td>
+<td style="text-align: left;"><img src="cocina_economica.jpeg" class="img-fluid" alt="processada"></td>
+</tr>
+</tbody>
+</table>
+<p>Ambdues eines són gratuïtes, però tenen funcionalitat limitada. En el meu cas, els límits d’ús són més que suficients, però m’he plantejat més d’un cop concentrar la feina de modificació d’imatges en un mes i subscriure’m a aquests serveis un parell de mesos per tenir accés a més prestacions que poden ser útils (processat més ràpid i cap limitació en el nombre d’imatges generades, eliminació del fons, …).</p>
+</section>
+<section id="automatitzant-el-procés" class="level2">
+<h2 class="anchored" data-anchor-id="automatitzant-el-procés">Automatitzant el procés</h2>
+<p>Fer un joc de taula és un procés iteratiu, pel que cal tenir un mètode que permeti:</p>
+<ul>
+<li>Regenerar totes les cartes d’una manera ràpida i àgil per tal de poder provar fàcilment vàries opcions de disseny i maquetació.</li>
+<li>Tenir un control de les diferents versions que es van fent del mateix. D’aquesta manera tot el procés de creació serà reproduible i traçable.</li>
+</ul>
+<p>Automatitzar tot el procés garanteix la consistencia en el disseny de tot el joc i evita els “casos especials” que acaben sent un malson quan es va modificant el disseny. Sempre que podeu, intenteu pensar com automatitzar el disseny des del principi de la creació del joc.</p>
+<p>Per aquest motiu l’elecció de les eines és critica. Una de les prestacions més important d’Scribus és el fet de poder fer <em>mail-merge</em>: creació de totes les cartes a partir d’una sola plantilla i un CSV amb les dades de totes les cartes. Aquest procés es pot realitzar amb el plug-in <a href="https://berteh.github.io/ScribusGenerator/">Scribus Generator</a>.</p>
 
 
+</section>
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Jocs de taula,Galego" data-listing-date-sort="1728345600000" data-listing-file-modified-sort="1730050960233" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="347">
-<div class="thumbnail">
-<p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a></p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">
-<p><img loading="lazy" src="./posts/codigo-segredo/codenames_codigo_segredo.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">Tradución do xogo “Código Secreto” ó galego</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Jocs de taula'); return false;">
-Jocs de taula
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Galego'); return false;">
-Galego
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">Ideas para a tradución das cartas de palabras do xogo “Codenames”</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">
-<div class="listing-date">
-Oct 8, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Jocs de taula,Català" data-listing-date-sort="1706832000000" data-listing-file-modified-sort="1730050960233" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1184">
-<div class="thumbnail">
-<p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a></p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">
-<p><img loading="lazy" src="./posts/com-fer-el-teu-cronocartes/pont_del_diable.jpeg" class="thumbnail-image"></p>
-</a><p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">Com fer el teu Cronocartes</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Jocs de taula'); return false;">
-Jocs de taula
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Català'); return false;">
-Català
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">Apunts per crear la teva versió del joc de cartes històric Cronocartes</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">
-<div class="listing-date">
-Feb 2, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="games,English" data-listing-date-sort="1703376000000" data-listing-file-modified-sort="1730050960241" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="713">
-<div class="thumbnail">
-<p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a></p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/ticket-to-ride-graph-analysis/output_8_0.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">Graph theory to model Ticket to ride</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('games'); return false;">
-games
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('English'); return false;">
-English
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">How to use Graph theory to build a model for the Ticket to ride boardgame as a first step towards customization and create your own maps.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">
-<div class="listing-date">
-Dec 24, 2023
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>No tinc cap vincle contractual amb ells ni cobro cap mena de comissió o ingrés de publicitat per part seva.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
