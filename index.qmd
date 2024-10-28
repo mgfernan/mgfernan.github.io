@@ -1,12 +1,5 @@
 ---
-title: "Benvinguts! passeu, passeu!"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
+title: "Miquel Garcia-Fernandez, PhD"
 page-layout: full
 title-block-banner: true
 format:
@@ -15,21 +8,43 @@ format:
 jupyter: python3
 ---
 
-::: {.panel-tabset}
+GNSS Expert | Tech Transfer and Innovation | Software Development
 
-## Català
+## Expertise
 
-Aquí trobaràs contingut molt variat; desde sistemes de posicionament global (GNSS),
-desenvolupament de software, algoritmes i jocs de taula. Pot ser que sigui interessants
-o avorrides, depèn de tu.
+My technological expertise covers
 
-A més, per complicar-ho una mica, hi ha una barreja de llengües bastant considerable (anglès, català, espanyol i gallec), però suposo que sempre pots fer servir Google Translate si t'interessa algun contingut que estigui en un idioma que no domines 😉.
+- Global Navigation Satellite Systems technology, from algorithm definition to implementation. My main expertise covers Navigation algorithms as well as ionospheric monitoring using GNSS.
 
-## English
+- GNSS data analysis
 
-Here you will find a medley of content; from navigation systems (GNSS), software development,
-algorithms and board games. They can be both interesting or boring, at the end this is up to you.
+- Terrestrial and Alternate Position, Navigation and Timing (PNT) systems (e.g. Wi-Fi Round Trip Time and other range-based systems such as 5G and Ultrawide-Band)
 
-In addition, to make things a bit more complicated, there is a considerable mix of languages (English, Catalan, Spanish, and Galician), but I suppose you can always use Google Translate if you're interested in any content that's in a language you're not fluent in 😉.
+- Software development (from proof-of-concept to production based systems based on Continuous Integration and Continuous Deployment)
 
-:::
+Other relevant skills
+
+- Technology transfer and Innovation
+
+- EU tender and grant proposal preparation and evaluation
+
+- Project management
+
+## Short bio
+
+I am a GNSS Research Engineer with over 20 years of experience. I holds a BSc in Telecommunication Engineering (1999) and a PhD in GNSS Data Processing for Ionospheric Monitoring (2004) from the Polytechnic University of Catalonia (Spain).
+
+I have a diverse career spanning academia and industry, and have held key positions at renowned institutions, including:
+
+- **Rokubun**: CTO and co-founder position of Rokubun
+- **JPL/NASA**: Technologist positgion, doing GNSS data processing for navigation, geodesy and orbit determination, as well as implementing physical models for the next generation GPS control segment
+- **Starlab Barcelona**: Space Program and Area Manager, executing projects related to GNSS data processing for Earth observation as well as GNSS receiver development.
+- **DLR**: Scientific saff at the GNSS Technology and Navigation group of the German Aerospace Center (DLR), developing GNSS systems for LEO applications.
+- **University of Kyoto**: Post-doctoral position for one year in the Research Center of Sustainable Humanosphere (RISH) on data combination for ionospheric monitoring,
+
+I am also an associate editor in the [GPS Solutions](https://link.springer.com/journal/10291) journal.
+
+[![](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/miquelgarcia/)
+[![](https://img.shields.io/badge/publication_list-Google_scholar-red)
+](https://scholar.google.com/citations?user=NsfSoY0AAAAJ&hl=en)
+[![](https://img.shields.io/badge/profile_in-research_gate-blue)](https://www.researchgate.net/profile/M-Garcia-Fernandez)

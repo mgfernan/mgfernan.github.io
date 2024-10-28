@@ -1,0 +1,37 @@
+---
+title: "Blog"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+
+::: {.panel-tabset}
+
+## Català
+
+Aquí trobaràs contingut molt variat; desde sistemes de posicionament global (GNSS),
+desenvolupament de software, algoritmes i jocs de taula. Pot ser que sigui interessants
+o avorrides, depèn de tu.
+
+A més, per complicar-ho una mica, hi ha una barreja de llengües bastant considerable (anglès, català, espanyol i gallec), però suposo que sempre pots fer servir Google Translate si t'interessa algun contingut que estigui en un idioma que no domines 😉.
+
+## English
+
+Here you will find a medley of content; from navigation systems (GNSS), software development,
+algorithms and board games. They can be both interesting or boring, at the end this is up to you.
+
+In addition, to make things a bit more complicated, there is a considerable mix of languages (English, Catalan, Spanish, and Galician), but I suppose you can always use Google Translate if you're interested in any content that's in a language you're not fluent in 😉.
+
+:::
+

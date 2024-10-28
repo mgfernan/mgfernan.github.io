@@ -8,6 +8,7 @@ website:
 
     right:
       - about.qmd
+      - blog.qmd
       - text: "Jocs"
         menu:
         - games/status.qmd
