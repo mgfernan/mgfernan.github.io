@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About me – mgfernan</title>
+<title>Blog – mgfernan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,9 +30,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -65,15 +68,73 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -88,11 +149,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -132,71 +193,158 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Blog</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Català">Català <span class="quarto-category-count">(1)</span></div><div class="category" data-category="English">English <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Galego">Galego <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Jocs de taula">Jocs de taula <span class="quarto-category-count">(2)</span></div><div class="category" data-category="games">games <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="profile.png" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">About me</h1>
-</div>
-<div class="quarto-title-meta">
-  </div>
-</header><main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Català</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Galego</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">English</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Català</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">English</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Els que es volen adreçar a mi, normalment ho fan pel meu nom, Miquel. Alguns, més formals, utilitzen el meu primer cognom, Garcia.</p>
-<p>Se’m coneix per ser un enginyer de sistemes de navegació (GPS pels profans en el tema), programador, somiatruites, aprenent etern i sobretot friqui, molt friqui.</p>
+<p>Aquí trobaràs contingut molt variat; desde sistemes de posicionament global (GNSS), desenvolupament de software, algoritmes i jocs de taula. Pot ser que sigui interessants o avorrides, depèn de tu.</p>
+<p>A més, per complicar-ho una mica, hi ha una barreja de llengües bastant considerable (anglès, català, espanyol i gallec), però suposo que sempre pots fer servir Google Translate si t’interessa algun contingut que estigui en un idioma que no domines 😉.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Aqueles que queren dirixirse a min normalmente o fan polo meu nome, Miquel. Algúns, máis formais, usan o meu primeiro apelido, Garcia.</p>
-<p>Coñécenme por ser un enxeñeiro de sistemas de navegación (GPS para os profanos no tema), programador, soñador, aprendiz eterno e sobre todo friqui, moi friqui.</p>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>Those who want to address me usually do so by my name, Miquel. Some, more formally, use my first surname, Garcia.</p>
-<p>I am known to be a navigation systems engineer (GPS for those unfamiliar with the subject), programmer, dreamer, eternal learner, and a geek.</p>
+<p>Here you will find a medley of content; from navigation systems (GNSS), software development, algorithms and board games. They can be both interesting or boring, at the end this is up to you.</p>
+<p>In addition, to make things a bit more complicated, there is a considerable mix of languages (English, Catalan, Spanish, and Galician), but I suppose you can always use Google Translate if you’re interested in any content that’s in a language you’re not fluent in 😉.</p>
 </div>
 </div>
 </div>
-<p>Em podeu trobar per aqui</p>
-<p><a href="https://mastodon.social/@mgfernan"><img src="https://img.shields.io/mastodon/follow/112557226124179626.png" class="img-fluid" alt="Mastodon Follow"></a> <a href="https://www.twitter.com/miquelgarciaf"><img src="https://img.shields.io/badge/Twitter-Follow-1da1f2?style=flat&amp;logo=twitter.png" class="img-fluid" alt="Twitter"></a> <a href="https://boardgamegeek.com/user/Tryskele"><img src="https://img.shields.io/badge/BoardGameGeek-Discover-cf8525?style=flat&amp;logo=boardgamegeek.png" class="img-fluid" alt="BoardGameGeek"></a> <a href="https://www.linkedin.com/in/miquelgarcia/"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&amp;logo=linkedin.png" class="img-fluid" alt="LinkedIn"></a></p>
-<p>Si voleu seguir el canal de creació de jocs que tinc a Telegram o WhatsApp, aquí us deixo els links:</p>
-<p><a href="https://t.me/+TNSVpWdLw2V_FyIF"><img src="https://img.shields.io/badge/Els%20jocs%20de%20la%20trisquela-a%20Telegram-blue?style=flat&amp;logo=telegram.png" class="img-fluid" alt="Els jocs de la trisquela"></a> <a href="https://chat.whatsapp.com/F2qRgrHnC8v86ZL4ue40LW"><img src="https://img.shields.io/badge/Els%20jocs%20de%20la%20trisquela-a%20Whatsapp-green?style=flat&amp;logo=whatsapp.png" class="img-fluid" alt="Els jocs de la trisquela"></a></p>
-<p><a rel="me" href="https://mastodon.social/@mgfernan"></a></p>
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://x.com/miquelgarciaf" class="about-link" rel="" target="">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">Twitter</span>
-  </a>
-  <a href="https://linkedin.com/in/miquelgarcia" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/mgfernan" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-  <a href="https://instagram.com/cronocartes" class="about-link" rel="" target="">
-    <i class="bi bi-instagram"></i>
-     <span class="about-link-text">Instagram</span>
-  </a>
-  <a href="https://mastodon.social/@mgfernan" class="about-link" rel="" target="">
-    <i class="bi bi-mastodon"></i>
-     <span class="about-link-text">Mastodon</span>
-  </a>
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Jocs de taula,Galego" data-listing-date-sort="1728345600000" data-listing-file-modified-sort="1730105976658" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="347">
+<div class="thumbnail">
+<p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a></p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">
+<p><img loading="lazy" src="./posts/codigo-segredo/codenames_codigo_segredo.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">Tradución do xogo “Código Secreto” ó galego</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Jocs de taula'); return false;">
+Jocs de taula
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Galego'); return false;">
+Galego
 </div>
 </div>
- <!-- /main -->
+<div class="listing-description">
+<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">Ideas para a tradución das cartas de palabras do xogo “Codenames”</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/codigo-segredo/codigo_segredo.html" class="no-external">
+<div class="listing-date">
+Oct 8, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Jocs de taula,Català" data-listing-date-sort="1706832000000" data-listing-file-modified-sort="1730105976658" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1184">
+<div class="thumbnail">
+<p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a></p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">
+<p><img loading="lazy" src="./posts/com-fer-el-teu-cronocartes/pont_del_diable.jpeg" class="thumbnail-image"></p>
+</a><p><a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">Com fer el teu Cronocartes</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Jocs de taula'); return false;">
+Jocs de taula
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Català'); return false;">
+Català
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">Apunts per crear la teva versió del joc de cartes històric Cronocartes</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html" class="no-external">
+<div class="listing-date">
+Feb 2, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="games,English" data-listing-date-sort="1703376000000" data-listing-file-modified-sort="1730105976666" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="713">
+<div class="thumbnail">
+<p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a></p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/ticket-to-ride-graph-analysis/output_8_0.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">Graph theory to model Ticket to ride</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('games'); return false;">
+games
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('English'); return false;">
+English
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">How to use Graph theory to build a model for the Ticket to ride boardgame as a first step towards customization and create your own maps.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/ticket-to-ride-graph-analysis/index.html" class="no-external">
+<div class="listing-date">
+Dec 24, 2023
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -217,6 +365,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
