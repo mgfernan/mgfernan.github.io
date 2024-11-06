@@ -18,6 +18,8 @@ website:
         href: https://github.com/mgfernan
       - icon: instagram
         href: https://instagram.com/cronocartes
+
+  google-analytics: "G-J0Q5PFB35Q"
 format:
   html:
     theme: cosmo
