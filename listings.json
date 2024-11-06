@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/gnss_data_data_volume/index.html",
       "/posts/codigo-segredo/codigo_segredo.html",
       "/posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html",
       "/posts/ticket-to-ride-graph-analysis/index.html"

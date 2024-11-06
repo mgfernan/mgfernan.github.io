@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-12-24">
-<meta name="description" content="How to use Graph theory to build a model for the Ticket to ride boardgame as a first step towards customization and create your own maps.">
+<meta name="dcterms.date" content="2024-10-29">
+<meta name="description" content="The rapid growth of GNSS receiver networks, coupled with the proliferation of constellations and signals, has led to an exponential increase in data volume. This post uses the GNSS data repository of the CDDIS GNSS receiver network to illustrate this trend.">
 
-<title>Graph theory to model Ticket to ride – mgfernan</title>
+<title>On the exploding size of GNSS measurement data files – mgfernan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -102,9 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -175,14 +172,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Graph theory to model Ticket to ride</h1>
+      <h1 class="title">On the exploding size of GNSS measurement data files</h1>
                   <div>
         <div class="description">
-          How to use Graph theory to build a model for the Ticket to ride boardgame as a first step towards customization and create your own maps.
+          The rapid growth of GNSS receiver networks, coupled with the proliferation of constellations and signals, has led to an exponential increase in data volume. This post uses the GNSS data repository of the CDDIS GNSS receiver network to illustrate this trend.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">games</div>
+                <div class="quarto-category">GNSS</div>
                 <div class="quarto-category">English</div>
               </div>
                   </div>
@@ -195,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 24, 2023</p>
+        <p class="date">October 29, 2024</p>
       </div>
     </div>
     
@@ -214,252 +211,157 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post contains a basic analysis of the mathematical model behind the board game <a href="https://boardgamegeek.com/boardgame/9209/ticket-ride">Ticket to Ride</a> by leveraging graph theory.</p>
-<p>As you know, “Ticket to Ride” is a game where players aim at completing train routes in the most efficient way possible. The first version of the game is set in the United States of America in the late 19th century during the railroad expansion.</p>
+<p>If you work with GNSS data processing, have you ever wondered how much data do the servers need to handle?</p>
+<p>If your use case is to perform a positioning session for a single receiver maybe not, but I bet the situation is different if you are building GNSS products (e.g.&nbsp;estimation of GNSS satellite orbits and clocks, ionospheric monitoring, …), where a worldwide distribution of receivers (and data) is not only desirable but mandatory.</p>
+<p>In order to answer this question, I have implemented a script that lists the files stored in the GNSS raw measurement data folders provided <a href="https://cddis.nasa.gov">CDDIS server</a>. In particular I selected the daily files with 30 seconds sampling rate. In order not to overwhelm the servers, I picked one day for each year (January 1st). Then used the code included in this post to plot the number of (unique) stations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as well as the median file size. The total folder size has been also computed.</p>
+<div id="194eec93" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">'./data/folder_*.txt'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># List of all dataframes</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data files</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> datetime.datetime.strptime(f, <span class="st">'./data/folder_%Y_%j.txt'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> pd.read_csv(f, delimiter<span class="op">=</span><span class="st">"\s+"</span>, names<span class="op">=</span>[<span class="st">'file'</span>, <span class="st">'size'</span>])</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">'date'</span>] <span class="op">=</span> date</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">'station'</span>] <span class="op">=</span> data[<span class="st">'file'</span>].<span class="bu">str</span>[:<span class="dv">4</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    dfs.append(data)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate all dataframes</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat(dfs)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> df.groupby(<span class="st">'date'</span>).agg(</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    n_stations<span class="op">=</span>(<span class="st">'station'</span>, <span class="kw">lambda</span> x: x.nunique()),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    median_size<span class="op">=</span>(<span class="st">'size'</span>, <span class="st">'median'</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    total_size<span class="op">=</span>(<span class="st">'size'</span>, <span class="st">'sum'</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># colors</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>blue <span class="op">=</span> <span class="st">'#0072bd'</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> <span class="st">'#a2142f'</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Evolution of GNSS data folder size</span><span class="ch">\n</span><span class="st">CDDIS network (daily 30s data files)"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax1.plot(stats.index, stats[<span class="st">'n_stations'</span>], label<span class="op">=</span><span class="st">"Number of stations"</span>, c<span class="op">=</span>blue)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>ax2.plot(stats.index, stats[<span class="st">'median_size'</span>] <span class="op">/</span> <span class="fl">1.0e6</span>, label<span class="op">=</span><span class="st">"Median file size [Mb]"</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, c<span class="op">=</span> red)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>ax2.plot(stats.index, stats[<span class="st">'total_size'</span>] <span class="op">/</span> <span class="fl">1.0e9</span>, label<span class="op">=</span><span class="st">"Total folder size [Gb]"</span>, c<span class="op">=</span> red)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Number of stations [count]'</span>, color<span class="op">=</span>blue)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'File size [Mb] or Folder size [Gb]'</span>, color<span class="op">=</span>red)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, colors<span class="op">=</span>blue)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, colors<span class="op">=</span>red)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>ax1.legend(loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>ax2.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Ticket_to_ride_USA.png" class="img-fluid figure-img"></p>
-<figcaption>Ticket to Ride, USA version</figcaption>
+<p><img src="index_files/figure-html/cell-2-output-1.png" width="758" height="375" class="figure-img"></p>
+<figcaption>GNSS data volume over years for CDDIS network</figcaption>
 </figure>
 </div>
-<p>Modeling the game is understood as assessing the distribution of:</p>
+</div>
+</div>
+<p>The figure is quite self-explanatory. One may think that the volume increase could be due to two factors:</p>
 <ul>
-<li>Number of tracks and associated colors</li>
-<li>Track lenghts (i.e.&nbsp;number of wagons required to complete the track)</li>
-<li>Shortest route between two stations¡</li>
+<li>Increased number of stations</li>
+<li>Increase of file size due to new constellations and new signals</li>
 </ul>
-<!-- more -->
-<section id="analysis" class="level2">
-<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<p>To do this analysis, we have used following key libraries:</p>
-<ul>
-<li><a href="https://pandas.pydata.org/">Pandas</a> for data loading and processing</li>
-<li><a href="https://networkx.org/">NetworkX</a> for graph processing and above all, to <strong>find the shortest path between two stations</strong> (nodes).</li>
-</ul>
-<p>First we will need to install some required libraries as well as import necessary modules</p>
-<div id="95eed096" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install matplotlib networkx pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="049ae36f" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The following cells contain some constants used in the notebook as well as the links to the CSVs that contain the Tracks and routes</p>
-<div id="726f3373" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TRACK_LENGTH_COLUMN <span class="op">=</span> <span class="st">'length'</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>FROM_COLUMN <span class="op">=</span> <span class="st">'from'</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>TO_COLUMN <span class="op">=</span> <span class="st">'to'</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>TRACKS_CSV_FILE <span class="op">=</span> <span class="st">'Ticket_to_ride - Tracks.csv'</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>TICKETS_CSV_FILE <span class="op">=</span> <span class="st">'Ticket_to_ride - Tickets.csv'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>First let’s load the Track CSV, this will be used to visualize the track network as a mathetmatical graph (of nodes/stations and edges/tracks). The CSV contains the two stations for each track as well as their associated color and lenghts (number of wagons required to complete the track)</p>
-<div id="76f57900" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(TRACKS_CSV_FILE)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[TRACK_LENGTH_COLUMN] <span class="op">=</span> pd.to_numeric(df[TRACK_LENGTH_COLUMN])</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<p>But looking at the plot is clear that the main driving factor for the volume size increase is the larger file size: note that from 2012 the number of stations has stabilized and yet the total size has suffered a large increase (following the trend of the file size).</p>
+<p>In order to see the possible causes of the file size increase, let’s take a particular station (<code>EBRE</code>, Ebre, Spain) as an example. All files studied are compressed using Hatanaka and binary zip compression. The constellations and bands tracked in 4 particular files in the past are summarized in the following table:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">from</th>
-<th data-quarto-table-cell-role="th">to</th>
-<th data-quarto-table-cell-role="th">color</th>
-<th data-quarto-table-cell-role="th">length</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">2008-01-01</th>
+<th style="text-align: center;">2012-01-01</th>
+<th style="text-align: center;">2016-01-01</th>
+<th style="text-align: center;">2018-01-01</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>Washington</td>
-<td>New York</td>
-<td>black</td>
-<td>2</td>
+<td style="text-align: center;">Filename</td>
+<td style="text-align: center;"><code>ebre0010.08d</code></td>
+<td style="text-align: center;"><code>ebre0010.12d</code></td>
+<td style="text-align: center;"><code>EBRE00ESP_R_20160010000_01D_30S_MO.rnx</code></td>
+<td style="text-align: center;"><code>EBRE00ESP_R_20180010000_01D_30S_MO</code></td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>Pittsburgh</td>
-<td>Chicago</td>
-<td>black</td>
-<td>3</td>
+<td style="text-align: center;">Constellations</td>
+<td style="text-align: center;">GPS</td>
+<td style="text-align: center;">GPS</td>
+<td style="text-align: center;">GPS+GLO+GAL+BDS</td>
+<td style="text-align: center;">GPS+GLO+GAL+BDS</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>Raleigh</td>
-<td>Nashville</td>
-<td>black</td>
-<td>3</td>
+<td style="text-align: center;">Number of bands</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6 (incl.&nbsp;Doppler observables)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>Duluth</td>
-<td>Winnipeg</td>
-<td>black</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>Kansas City</td>
-<td>Denver</td>
-<td>black</td>
-<td>4</td>
+<td style="text-align: center;">Rinex version</td>
+<td style="text-align: center;">2.11</td>
+<td style="text-align: center;">2.11</td>
+<td style="text-align: center;">3.02</td>
+<td style="text-align: center;">3.02</td>
 </tr>
 </tbody>
 </table>
-
-</div>
-</div>
-</div>
-<p>With this <code>DataFrame</code> we can know useful information such as:</p>
+<p>It is clear then that the qualitative jump between 2012 to 2016 is caused by the recording of additional constellations (most notably Galileo and Beidou, which have associated many more signals). Additional increase in the file size is the inclusion of Doppler observables (in the case of <code>EBRE</code> sometime between 2016 and 2018).</p>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>Here’s a polished version of your conclusions:</p>
+<p><strong>Conclusions</strong></p>
+<p>Based on the analyzed data, several key observations emerge:</p>
 <ul>
-<li>Number of total tracks</li>
-<li>Number of wagons required for each color</li>
-<li>Track distribution for each color</li>
+<li><strong>Data Volume:</strong> The daily data volume currently hovers around 2.5 GB, translating to approximately 1 TB/year. This figure excludes high-rate datasets recorded at 1-second intervals, which significantly increase the overall volume.</li>
+<li><strong>Station Count:</strong> The number of stations within the CDDIS network has remained relatively stable at around 500 since 2014, which discards this parameter as the main source for the volume increase.</li>
+<li><strong>File size:</strong> The actual responsible of the overall folder size increase (rather than the station count). A notable surge in file and folder sizes started occuring in 2016, primarily due to the introduction of new constellations, associated signals, and the inclusion of e.g.&nbsp;Doppler observables.</li>
 </ul>
-<p>In addition, we can use the <code>DataFrame</code> to create the <strong>graph</strong> using the <code>networkx</code> library and make a visual representation of the track network</p>
-<div id="12c7d449" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a directed graph with weighted edges</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> nx.from_pandas_edgelist(df, FROM_COLUMN, TO_COLUMN, edge_attr<span class="op">=</span>TRACK_LENGTH_COLUMN, create_using<span class="op">=</span>nx.Graph())</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> nx.spring_layout(graph, weight<span class="op">=</span>TRACK_LENGTH_COLUMN, seed<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>nx.draw(graph, pos, with_labels<span class="op">=</span><span class="va">True</span>, node_size<span class="op">=</span><span class="dv">400</span>, node_color<span class="op">=</span><span class="st">'skyblue'</span>, font_size<span class="op">=</span><span class="dv">9</span>, font_color<span class="op">=</span><span class="st">'black'</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, edge_color<span class="op">=</span><span class="st">'grey'</span>, linewidths<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add edge labels showing weights</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>edge_labels <span class="op">=</span> nx.get_edge_attributes(graph, TRACK_LENGTH_COLUMN)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edge_labels(graph, pos, edge_labels<span class="op">=</span>edge_labels)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-6-output-1.png" width="691" height="499" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The advantage of modeling the track network as a graph is that we can use already existing libraries to compute the shortest path between two stations (both the passing stations as well as the total length), as in the following example</p>
-<div id="d876b505" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>FROM <span class="op">=</span> <span class="st">'El Paso'</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DESTINATION <span class="op">=</span> <span class="st">'Raleigh'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>shortest_path <span class="op">=</span> nx.shortest_path(graph, source<span class="op">=</span>FROM, target<span class="op">=</span>DESTINATION, weight<span class="op">=</span>TRACK_LENGTH_COLUMN)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'The shortest path goes through these stations: </span><span class="sc">{</span><span class="st">" - "</span><span class="sc">.</span>join(shortest_path)<span class="sc">}</span><span class="ss">'</span> )</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>shortest_path_length <span class="op">=</span> nx.shortest_path_length(graph, source<span class="op">=</span>FROM, target<span class="op">=</span>DESTINATION, weight<span class="op">=</span>TRACK_LENGTH_COLUMN)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'The length for the shortes path is: </span><span class="sc">{</span>shortest_path_length<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The shortest path goes through these stations: El Paso - Dallas - Little Rock - Nashville - Raleigh
-The length for the shortes path is: 12</code></pre>
-</div>
-</div>
-<pre><code>The shortest path goes through these stations: El Paso - Dallas - Little Rock - Nashville - Raleigh
-The length for the shortes path is: 12</code></pre>
-<p>These methods (specially <code>nx.shortest_path_length</code>) are very relevant to reverse engineer the ticket cards (that give points if a player completes a route). Basically we need to know how the points awarded per card is related to the shortest path.</p>
-<p>To do so, we will load the Ticket CSV into a <code>DataFrame</code> and compute the shortest path for each card:</p>
-<div id="01d0760c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Ticket CSV</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_tickets <span class="op">=</span> pd.read_csv(TICKETS_CSV_FILE)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column in the dataframe with the shortest path length for each route (i.e. ticket card)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df_tickets[TRACK_LENGTH_COLUMN] <span class="op">=</span> df_tickets.<span class="bu">apply</span>(<span class="kw">lambda</span> r: nx.shortest_path_length(graph, source<span class="op">=</span>r[FROM_COLUMN], target<span class="op">=</span>r[TO_COLUMN], weight<span class="op">=</span>TRACK_LENGTH_COLUMN), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>df_tickets.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">from</th>
-<th data-quarto-table-cell-role="th">to</th>
-<th data-quarto-table-cell-role="th">points</th>
-<th data-quarto-table-cell-role="th">length</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>Los Angeles</td>
-<td>New York</td>
-<td>21</td>
-<td>20</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>Winnipeg</td>
-<td>Little Rock</td>
-<td>11</td>
-<td>11</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>Vancouver</td>
-<td>Santa Fe</td>
-<td>13</td>
-<td>13</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>Montreal</td>
-<td>Atlanta</td>
-<td>9</td>
-<td>9</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>Toronto</td>
-<td>Miami</td>
-<td>10</td>
-<td>10</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<p>At this point we can realise that the points awarded per route are in fact equivalent (at least on the most cases) with the lenghts (i.e.&nbsp;total number of wagons required to complete the route), which makes sense.</p>
-<div id="15941b05" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.plot(df_tickets[TRACK_LENGTH_COLUMN], df_tickets[<span class="st">'points'</span>], <span class="st">'o'</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Shortest route length [number of wagons]'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Ticket card points'</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Relationship between Ticket card points and</span><span class="ch">\n</span><span class="st">Shortest route length'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="597" height="467" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>The substantial increase in data volume poses challenges beyond mere storage considerations. The RINEX format, while human-readable, is not optimized for machine processing, potentially hindering applications that require the analysis of large datasets (Big data, AI/ML, …). To address this limitation, alternative binary (machine-friendly) formats could be considered as a complementary solution to enhance processing efficiency: a preliminary analysis show that while loading (parsing) a RINEX format in Python may take several tens of seconds (for a 5h 1 second interval RINEX V3 file), the same file stored in <a href="https://parquet.apache.org/">Apache Parquet</a> takes little more than a second to load.</p>
 </section>
-<section id="key-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
-<p>From the analysis, the following takeaways are relevant in case you need to make your own <em>customization</em> of Ticket to ride:</p>
-<ul>
-<li>There are 36 stations</li>
-<li>There are a total of 100 tracks (double tracks are considered independent tracks)</li>
-<li>Each color (except grey) needs a total of 27 wagons to complete their tracks</li>
-<li>Each color (except grey) has a total number of 7 tracks, and their distribution is: 6-5-4-4-3-3-2, except for green and white, for which their distribution is: 6-5-5-4-3-2-2.</li>
-<li>To the largest possible extent, the colors are homogeneously distributed on the territory (which makes sense in order to balance the game).</li>
-<li>There are 30 ticket cards</li>
-<li>The points for each ticket card represent the shortest path length (i.e.&nbsp;minimum number of wagons required to complete the card), with some small exceptions.</li>
-</ul>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Thanks to NASA (and CDDIS) to provide the data used to elaborate this blog post.</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The same folder may contain data for the same receiver with different formats (e.g.&nbsp;RINEX v2 and RINEX v3), the script below makes sure only unique stations are computed.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
