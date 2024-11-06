@@ -211,10 +211,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>If you work with GNSS data processing, have you ever wondered how much data do the servers need to handle?</p>
+<p>For those of you who work with GNSS data processing, have you ever wondered how much data do servers such as CDDIS or EUREF, who store historic GNSS raw measurement data, need to handle?</p>
 <p>If your use case is to perform a positioning session for a single receiver maybe not, but I bet the situation is different if you are building GNSS products (e.g.&nbsp;estimation of GNSS satellite orbits and clocks, ionospheric monitoring, …), where a worldwide distribution of receivers (and data) is not only desirable but mandatory.</p>
-<p>In order to answer this question, I have implemented a script that lists the files stored in the GNSS raw measurement data folders provided <a href="https://cddis.nasa.gov">CDDIS server</a>. In particular I selected the daily files with 30 seconds sampling rate. In order not to overwhelm the servers, I picked one day for each year (January 1st). Then used the code included in this post to plot the number of (unique) stations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as well as the median file size. The total folder size has been also computed.</p>
-<div id="194eec93" class="cell" data-execution_count="1">
+<p>In order to answer this question, I have implemented a script that lists the files stored in the GNSS raw measurement data folders provided <a href="https://cddis.nasa.gov">CDDIS server</a>. In particular, I selected the daily files with 30 seconds sampling rate. In order not to overwhelm the servers, just one day for each year (January 1st) was processed. Then, the code included below in this post has been used to plot the number of (unique) stations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as well as the median file size. The total folder size has been also computed.</p>
+<p>Initially, one may think that the volume increase could be due to two factors:</p>
+<ul>
+<li>Increased number of stations</li>
+<li>Increase of file size due to new constellations and new signals</li>
+</ul>
+<div id="7af13cf2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
@@ -280,13 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The figure is quite self-explanatory. One may think that the volume increase could be due to two factors:</p>
-<ul>
-<li>Increased number of stations</li>
-<li>Increase of file size due to new constellations and new signals</li>
-</ul>
-<p>But looking at the plot is clear that the main driving factor for the volume size increase is the larger file size: note that from 2012 the number of stations has stabilized and yet the total size has suffered a large increase (following the trend of the file size).</p>
-<p>In order to see the possible causes of the file size increase, let’s take a particular station (<code>EBRE</code>, Ebre, Spain) as an example. All files studied are compressed using Hatanaka and binary zip compression. The constellations and bands tracked in 4 particular files in the past are summarized in the following table:</p>
+<p>But looking at the figure is clear that the main driving factor for the volume size increase is the larger file size: note that from 2012 the number of stations has stabilized and yet the total size has suffered a large increase (following the trend of the file size). Note also that most of the folders contain duplicated data: data from the same station might be stored in both RINEX v2 and v3 (althought this may change in the future, as V2 support is winding down).</p>
+<p>In order to illustrate the causes of the file size increase, let’s take a particular station (<code>EBRE</code>, Observatori de l’Ebre, Spain) as an example. All files studied are compressed using Hatanaka and binary zip. The constellations and bands tracked in 4 particular files in the past are summarized in the following table:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -338,19 +338,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It is clear then that the qualitative jump between 2012 to 2016 is caused by the recording of additional constellations (most notably Galileo and Beidou, which have associated many more signals). Additional increase in the file size is the inclusion of Doppler observables (in the case of <code>EBRE</code> sometime between 2016 and 2018).</p>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
-<p>Here’s a polished version of your conclusions:</p>
-<p><strong>Conclusions</strong></p>
 <p>Based on the analyzed data, several key observations emerge:</p>
 <ul>
-<li><strong>Data Volume:</strong> The daily data volume currently hovers around 2.5 GB, translating to approximately 1 TB/year. This figure excludes high-rate datasets recorded at 1-second intervals, which significantly increase the overall volume.</li>
-<li><strong>Station Count:</strong> The number of stations within the CDDIS network has remained relatively stable at around 500 since 2014, which discards this parameter as the main source for the volume increase.</li>
-<li><strong>File size:</strong> The actual responsible of the overall folder size increase (rather than the station count). A notable surge in file and folder sizes started occuring in 2016, primarily due to the introduction of new constellations, associated signals, and the inclusion of e.g.&nbsp;Doppler observables.</li>
+<li><strong>Data Volume:</strong> For the CDDIS network, the daily data volume currently hovers around 2.5 GB, translating to approximately 1 TB/year. This figure excludes high-rate datasets recorded at 1-second intervals, which significantly increase the overall volume (at least by a factor of 30).</li>
+<li><strong>Station Count:</strong> The number of stations within the CDDIS network has remained relatively stable at around 500 since 2014, which discards this parameter as the main cause for the volume increase.</li>
+<li><strong>File size:</strong> is the actual responsible of the overall folder size increase (rather than the station count). A notable surge in file and folder sizes started occuring in 2016, primarily due to the introduction of new constellations, associated signals, and the inclusion of additional observables such as e.g.&nbsp;Doppler observables.</li>
 </ul>
-<p>The substantial increase in data volume poses challenges beyond mere storage considerations. The RINEX format, while human-readable, is not optimized for machine processing, potentially hindering applications that require the analysis of large datasets (Big data, AI/ML, …). To address this limitation, alternative binary (machine-friendly) formats could be considered as a complementary solution to enhance processing efficiency: a preliminary analysis show that while loading (parsing) a RINEX format in Python may take several tens of seconds (for a 5h 1 second interval RINEX V3 file), the same file stored in <a href="https://parquet.apache.org/">Apache Parquet</a> takes little more than a second to load.</p>
+<p>The substantial increase in data volume poses challenges beyond mere storage considerations. The RINEX format, while human-readable, is not optimized for machine processing, potentially hindering applications that require the analysis of large datasets (Big data, AI/ML, …). To address this limitation, alternative binary (machine-friendly) formats should be considered as a complementary solution to enhance processing efficiency: a preliminary analysis show that while loading (parsing) a RINEX format in Python may take several tens of seconds (for a 5h 1-second interval RINEX V3 file), the same file stored in <a href="https://parquet.apache.org/">Apache Parquet</a> takes little more than a second to load.</p>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
 <p>Thanks to NASA (and CDDIS) to provide the data used to elaborate this blog post.</p>
+</section>
+<section id="use-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="use-of-ai">Use of AI</h2>
+<p>Artificial Intellignce has been used to polish some text styling and correct some typos. Ideation and data processing has been done by the author.</p>
 
 
 </section>
