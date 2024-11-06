@@ -112,5 +112,5 @@ Thanks to NASA (and CDDIS) to provide the data used to elaborate this blog post.
 
 ## Use of AI
 
-Artificial Intellignce has been used to polish some text styling and correct some
+Artificial Intelligence has been used to polish some text styling and correct some
 typos. Ideation and data processing has been done by the author.
