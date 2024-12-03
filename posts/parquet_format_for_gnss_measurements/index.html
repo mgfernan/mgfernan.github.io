@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-11-25">
+<meta name="description" content="Leverage Apache parquet to store and exchange GNSS measurement, usually stored in RINEX (text-based) format. This format can be quickly loaded in data structures such as pandas DataFrame for efficient data manipulation and processing.">
+
+<title>Using Apache parquet to store and process GNSS measurements – mgfernan</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-f2a1071e85750ec973bbb8a8f120da0f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-eab9dbc1ad39271d7da09bb6f6b35665.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-J0Q5PFB35Q"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">mgfernan</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-jocs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Jocs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-jocs">    
+        <li>
+    <a class="dropdown-item" href="../../games/status.html">
+ <span class="dropdown-text">Desenvolupament de jocs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../games/cronocartes/index.html">
+ <span class="dropdown-text">Cronocartes Història de Catalunya</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../games/cronocartas/index.html">
+ <span class="dropdown-text">Cronocartas Historia de Galicia</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mgfernan"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://instagram.com/cronocartes"> <i class="bi bi-instagram" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Using Apache parquet to store and process GNSS measurements</h1>
+                  <div>
+        <div class="description">
+          Leverage Apache parquet to store and exchange GNSS measurement, usually stored in RINEX (text-based) format. This format can be quickly loaded in data structures such as <code>pandas</code> <code>DataFrame</code> for efficient data manipulation and processing.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">GNSS</div>
+                <div class="quarto-category">English</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 25, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#converting-rinex-to-parquet" id="toc-converting-rinex-to-parquet" class="nav-link active" data-scroll-target="#converting-rinex-to-parquet">Converting RINEX to parquet</a></li>
+  <li><a href="#tip-compute-the-code-minus-carrier-observable" id="toc-tip-compute-the-code-minus-carrier-observable" class="nav-link" data-scroll-target="#tip-compute-the-code-minus-carrier-observable">Tip: compute the code-minus-carrier observable</a></li>
+  <li><a href="#tip-use-groupby-to-efficiently-process-data" id="toc-tip-use-groupby-to-efficiently-process-data" class="nav-link" data-scroll-target="#tip-use-groupby-to-efficiently-process-data">Tip: use <code>groupby</code> to efficiently process data</a></li>
+  <li><a href="#tip-use-merge-to-compute-multifrequency-observables" id="toc-tip-use-merge-to-compute-multifrequency-observables" class="nav-link" data-scroll-target="#tip-use-merge-to-compute-multifrequency-observables">Tip: use <code>merge</code> to compute multifrequency observables</a></li>
+  <li><a href="#why-the-constellation-and-signal-fields-enhance-efficiency" id="toc-why-the-constellation-and-signal-fields-enhance-efficiency" class="nav-link" data-scroll-target="#why-the-constellation-and-signal-fields-enhance-efficiency">Why the <code>constellation</code> and <code>signal</code> fields enhance efficiency?</a></li>
+  <li><a href="#a-note-on-file-size" id="toc-a-note-on-file-size" class="nav-link" data-scroll-target="#a-note-on-file-size">A note on file size</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#use-of-ai" id="toc-use-of-ai" class="nav-link" data-scroll-target="#use-of-ai">Use of AI</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Following up on a <a href="../../posts/gnss_data_data_volume/index.html">previous idea</a> regarding the sheer volume of the GNSS measurements generated by CORS<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> networks, this post explores a potential binary storage of GNSS measurements (rather than text) leveraging the <a href="https://parquet.apache.org/">Apache parquet</a> format. This format is highly used in Artificial Intelligence and Machine Learning applications, which is being also adopted in GNSS for e.g.&nbsp;prediction of precise product (orbits and clocks), see also <span class="citation" data-cites="siemuri2022systematic">Siemuri et al. (<a href="#ref-siemuri2022systematic" role="doc-biblioref">2022</a>)</span> or <span class="citation" data-cites="mao2024global">Mao et al. (<a href="#ref-mao2024global" role="doc-biblioref">2024</a>)</span>. By transitioning from text-based storage to a binary format like Parquet, we can unlock significant speed improvements in GNSS data processing pipelines, eliminating the need for time-consuming text parsing.</p>
+<p>From this post, you can expect the following:</p>
+<ul>
+<li>Convert RINEX observable files to binary Parquet using the Python <code>roktools</code> library.</li>
+<li>Explore a first draft of potential columns for the GNSS Parquet files</li>
+<li>Some basic maniupation tips for basic GNSS measurement processing</li>
+</ul>
+<section id="converting-rinex-to-parquet" class="level2">
+<h2 class="anchored" data-anchor-id="converting-rinex-to-parquet">Converting RINEX to parquet</h2>
+<p>Converting RINEX files to the Parquet format involves a two-step process:</p>
+<ul>
+<li><p><strong>Parsing the RINEX data</strong>: We leverage the <a href="https://pypi.org/project/roktools/">roktools library</a> to efficiently parse the RINEX file and organize the data into a structured format.</p></li>
+<li><p><strong>Storage with pandas</strong>: Once parsed, the data is seamlessly converted into a <a href="https://pandas.pydata.org/"><code>pandas</code></a> <code>DataFrame</code>. Pandas, a popular Python library for data manipulation, offers a built-in function for writing DataFrames directly to Parquet format.</p></li>
+</ul>
+<p>This approach simplifies the conversion process and is shown in the code snippet below:</p>
+<div id="a5294c46" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> roktools <span class="im">import</span> rinex</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we use Context Manager to store the parquet file in a</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># temporary file that will be cleaned up automatically</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># after loading it</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tempfile.NamedTemporaryFile() <span class="im">as</span> fh:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    rinex.to_parquet([<span class="st">'SUN600SWE_S_20241312200_01M_01S_MO.rnx'</span>], output_filename<span class="op">=</span>fh.name)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rewind temporary file</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    fh.seek(<span class="dv">0</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the parquet file into a DataFrame</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_parquet(fh.name)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Print preview of the DataFrame</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">epoch</th>
+<th data-quarto-table-cell-role="th">constellation</th>
+<th data-quarto-table-cell-role="th">sat</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">signal</th>
+<th data-quarto-table-cell-role="th">range</th>
+<th data-quarto-table-cell-role="th">phase</th>
+<th data-quarto-table-cell-role="th">doppler</th>
+<th data-quarto-table-cell-role="th">snr</th>
+<th data-quarto-table-cell-role="th">slip</th>
+<th data-quarto-table-cell-role="th">station</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-05-10 22:00:00</td>
+<td>G</td>
+<td>G04</td>
+<td>1C</td>
+<td>G041C</td>
+<td>2.462384e+07</td>
+<td>1.293992e+08</td>
+<td>-3646.251</td>
+<td>35.0</td>
+<td>0</td>
+<td>sun6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-05-10 22:00:00</td>
+<td>G</td>
+<td>G04</td>
+<td>2W</td>
+<td>G042W</td>
+<td>2.462385e+07</td>
+<td>1.008308e+08</td>
+<td>NaN</td>
+<td>20.0</td>
+<td>0</td>
+<td>sun6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-05-10 22:00:00</td>
+<td>G</td>
+<td>G04</td>
+<td>2X</td>
+<td>G042X</td>
+<td>2.462385e+07</td>
+<td>1.008308e+08</td>
+<td>NaN</td>
+<td>41.0</td>
+<td>0</td>
+<td>sun6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-05-10 22:00:00</td>
+<td>G</td>
+<td>G04</td>
+<td>5X</td>
+<td>G045X</td>
+<td>2.462385e+07</td>
+<td>9.662954e+07</td>
+<td>NaN</td>
+<td>45.0</td>
+<td>0</td>
+<td>sun6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-05-10 22:00:00</td>
+<td>G</td>
+<td>G04</td>
+<td>1X</td>
+<td>G041X</td>
+<td>2.462384e+07</td>
+<td>1.293995e+08</td>
+<td>NaN</td>
+<td>37.0</td>
+<td>0</td>
+<td>sun6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>As you can see, the data has a columnar layout with the following fields:</p>
+<ul>
+<li><code>epoch</code> of the measurement (corresponds to the RINEX epoch of the measurements)</li>
+<li><code>constellation</code>: single character with the constellation (RINEX convention, e.g.&nbsp;<code>R</code> for Glonass, <code>G</code> for GPS, …)</li>
+<li><code>sat</code>: Three character satellite identifier. First letter corresponds to the constellation and the last two characters corresponds to the satellite number (as defined by the RINEX format).</li>
+<li><code>channel</code>: two character description of the tracking channel. The values from this field correspond to the last two characters of the three-character RINEX channel code. The first character (the observable type) has been dropped because all measurements associated to this tracking channel (code, phase, Doppler and C/N0) are placed in the same row. This layout makes it straightforward to compute observables such as <em>code-minus-carrier</em>.</li>
+<li><code>signal</code>: Union of the satellite and channel fields. Albeit this may seem a redundant field, some optimization considerations make this field useful, as explained in the section below.</li>
+<li><code>range</code>: Pseudorange in meters</li>
+<li><code>phase</code>: Carrier-phase in cycles</li>
+<li><code>doppler</code>: Doppler observables expressed in cycles per second</li>
+<li><code>snr</code>: C/N0 expressed in dB-Hz</li>
+<li><code>slip</code>: Cycle slip / loss of lock field of the RINEX format.</li>
+<li><code>station</code>: Name of the station that recorded the measurements. Having this field may allow to have observables from multiple stations in the same <code>parquet</code> file.</li>
+</ul>
+</section>
+<section id="tip-compute-the-code-minus-carrier-observable" class="level2">
+<h2 class="anchored" data-anchor-id="tip-compute-the-code-minus-carrier-observable">Tip: compute the code-minus-carrier observable</h2>
+<p>With the column layout proposed for the <code>parquet</code> format, extracting observables such as the <code>CMC</code> (<em>code-minus-carrier</em>), that use data for the same tracking channel, becomes straightforward:</p>
+<div id="a3ac9c0b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="st">'G041C'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data to extract only the desired signal</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_signal <span class="op">=</span> df[df[<span class="st">'signal'</span>] <span class="op">==</span> signal]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Elapsed time</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> df_signal[<span class="st">'epoch'</span>].loc[<span class="dv">0</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> (df_signal[<span class="st">'epoch'</span>] <span class="op">-</span> t0).dt.total_seconds().to_numpy()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CMC (conversion from cycles to meters is required)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>wavelength_l1 <span class="op">=</span> <span class="dv">299792458</span><span class="op">/</span>(<span class="fl">154.0</span><span class="op">*</span><span class="fl">10.23e6</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_signal[<span class="st">'range'</span>] <span class="op">-</span> df_signal[<span class="st">'phase'</span>] <span class="op">*</span> wavelength_l1</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Time elapsed since </span><span class="sc">{</span>t0<span class="sc">}</span><span class="ss"> [s]'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Code-minus-carrier [m]'</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Code-minus-carrier combination for signal </span><span class="sc">{</span>signal<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'.-'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="608" height="449" class="figure-img"></p>
+<figcaption>Example of code-minus-carrier combination computation</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tip-use-groupby-to-efficiently-process-data" class="level2">
+<h2 class="anchored" data-anchor-id="tip-use-groupby-to-efficiently-process-data">Tip: use <code>groupby</code> to efficiently process data</h2>
+<p>Usually, a GNSS analyst processes the data on a satellite-station (e.g.&nbsp;link) basis or on a <code>signal</code>-basis (satellite and tracking channel). Examples are:</p>
+<ul>
+<li>Detection of code outliers or single-frequency cycle slip detection based on jumps in the CMC combination.</li>
+<li>Computation of Rate of Total Electron Content Index (ROTI) for scintillation monitoring (<span class="citation" data-cites="pi1997monitoring">Pi et al. (<a href="#ref-pi1997monitoring" role="doc-biblioref">1997</a>)</span>)</li>
+<li>Computation of multi-channel observations such as ionospheric free or geometry free combinations</li>
+</ul>
+<p>In those cases, when using <code>pandas</code>, the <code>groupby</code> strategy becomes in handy to quickly work on a signal-per-signal basis in a very efficient manner</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avoid <code>for</code> loops
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Leveraging techniques like <code>groupby</code> enables efficient vectorized operations, significantly outperforming slow Python <code>for</code> loops.</p>
+</div>
+</div>
+<p>As an example, let’s compute the first derivate of the phase (for all signals) and compare it with the Doppler observable (please note that no <code>for</code> has been used in the code):</p>
+<div id="1c5e7e25" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the time derivative of the phase</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'d_phase'</span>] <span class="op">=</span> df.groupby(<span class="st">'signal'</span>)[<span class="st">'phase'</span>].diff()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="78af47f0" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="st">'G041C'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_signal <span class="op">=</span> df[df[<span class="st">'signal'</span>] <span class="op">==</span> signal]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Time elapsed</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> df_signal[<span class="st">'epoch'</span>].loc[<span class="dv">0</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> (df_signal[<span class="st">'epoch'</span>] <span class="op">-</span> t0).dt.total_seconds().to_numpy()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Time elapsed since </span><span class="sc">{</span>t0<span class="sc">}</span><span class="ss"> [s]'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Doppler and phase time derivative [cycles/s]'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Time derivative of signal </span><span class="sc">{</span>signal<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x, df_signal[<span class="st">'d_phase'</span>], <span class="st">'.-'</span>, label<span class="op">=</span><span class="st">"d phase/dt"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.plot(x, <span class="op">-</span>df_signal[<span class="st">'doppler'</span>], <span class="st">'.-'</span>, label<span class="op">=</span><span class="st">"Doppler"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="602" height="449" class="figure-img"></p>
+<figcaption>Time derivative of the carrier phase</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tip-use-merge-to-compute-multifrequency-observables" class="level2">
+<h2 class="anchored" data-anchor-id="tip-use-merge-to-compute-multifrequency-observables">Tip: use <code>merge</code> to compute multifrequency observables</h2>
+<p>Another powerful method to process GNSS data, specially when trying to combine data from different <code>signal</code>, is the database-inherited <code>merge</code> method. This allows to join sections of the <code>DataFrame</code> and quickly build dual-frequency combinations. To illustrate this, let’s compute the <em>geometry-free</em> (or <em>ionospheric</em>) combination.</p>
+<div id="80059f97" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>channel_a <span class="op">=</span> <span class="st">'1X'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>channel_b <span class="op">=</span> <span class="st">'5X'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter DataFrames for each signal</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Using a mask allows accessing filtered data directly</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># without creating new DataFrames</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>mask_a <span class="op">=</span> df[<span class="st">'channel'</span>] <span class="op">==</span> channel_a</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>mask_b <span class="op">=</span> df[<span class="st">'channel'</span>] <span class="op">==</span> channel_b</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df_a <span class="op">=</span> df[mask_a]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df_b <span class="op">=</span> df[mask_b]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Wavelenghts will be required to convert from cycles to meters</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>wavelength_a <span class="op">=</span> <span class="dv">299792458</span><span class="op">/</span>(<span class="fl">154.0</span><span class="op">*</span><span class="fl">10.23e6</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>wavelength_b <span class="op">=</span> <span class="dv">299792458</span><span class="op">/</span>(<span class="fl">115.0</span><span class="op">*</span><span class="fl">10.23e6</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge on 'time' and calculate the difference</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> df_a.merge(df_b, on<span class="op">=</span>[<span class="st">'epoch'</span>, <span class="st">'sat'</span>], suffixes<span class="op">=</span>(<span class="st">'_a'</span>, <span class="st">'_b'</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">'li_m'</span>] <span class="op">=</span> df_merged[<span class="st">'phase_a'</span>] <span class="op">*</span> wavelength_a <span class="op">-</span> df_merged[<span class="st">'phase_b'</span>] <span class="op">*</span>wavelength_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cc32c9f5" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sat <span class="op">=</span> <span class="st">'E04'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_sat <span class="op">=</span> df_merged[df_merged[<span class="st">'sat'</span>] <span class="op">==</span> sat]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Time elapsed</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> df_sat[<span class="st">'epoch'</span>].iloc[:<span class="dv">1</span>].values[<span class="dv">0</span>]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> (df_sat[<span class="st">'epoch'</span>] <span class="op">-</span> t0).dt.total_seconds().to_numpy()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Time elapsed since </span><span class="sc">{</span>t0<span class="sc">}</span><span class="ss"> [s]'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'LI [m]'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Geometry free combination of phases for </span><span class="sc">{</span>channel_a<span class="sc">}</span><span class="ss"> and </span><span class="sc">{</span>channel_b<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>sat<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x, df_sat[<span class="st">'li_m'</span>], <span class="st">'.-'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="617" height="449" class="figure-img"></p>
+<figcaption>Example of geometry free combination (LI)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The primary limitation of this approach lies in the additional memory required to store the filtering masks. However, this overhead is significantly less substantial compared to creating entirely new DataFrames for each signal. The mask-based approach operates on references to the original DataFrame, avoiding the creation of new data structures.</p>
+<p>As an alternative to the <code>merge</code> operation, the <code>groupby</code> function can be employed to group data by epoch and subsequently identify the specific channels within each group for combination.</p>
+</section>
+<section id="why-the-constellation-and-signal-fields-enhance-efficiency" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-constellation-and-signal-fields-enhance-efficiency">Why the <code>constellation</code> and <code>signal</code> fields enhance efficiency?</h2>
+<p>The inclusion of <code>constellation</code> and <code>signal</code> fields within the DataFrame, albeit they may seem redudant, significantly accelerates data processing and analysis by streamlining operations and reducing computational overhead in the following way:</p>
+<ul>
+<li><p>Optimized <code>groupby</code> operations: The signal field directly identifies unique signal types, eliminating the need for complex groupby operations involving multiple fields like <code>['sat', 'channel']</code>. This simplification leads to substantial performance gains, as groupby operations on single fields are considerably faster.</p></li>
+<li><p>Efficient <code>constellation</code>-level analysis: The constellation field provides direct access to constellation information, bypassing the need for time-consuming string manipulation and filtering of the <code>sat</code> field. This enables efficient constellation-level operations, such as counting satellites per constellation or calculating constellation-specific statistics.</p></li>
+</ul>
+<p>By incorporating these dedicated fields, the DataFrame becomes more efficient and versatile, enabling swift and accurate analysis of GNSS data.</p>
+</section>
+<section id="a-note-on-file-size" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-file-size">A note on file size</h2>
+<p>Despite the convenience of using <code>parquet</code> files for data processing and the substantial increase in the loading speed (plus the possibility of distributed processing when using Apache Spark instances), in terms of storage it stilss falls short competing with the de-facto standard <em>Hatanaka + Gzip combo</em>.</p>
+<p>Taking as an example the RINEX file <code>ACSO00XXX_R_20241310000_01D_01S_MO.rnx</code> (<code>ACSO</code> station, data for 1 day at 1 second interval, multi-constellation, multi-frequency), the different file sizes using various compression formats are shown in the table below:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">compression</th>
+<th style="text-align: center;">size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Uncompressed RINEX file (<code>rnx</code>)</td>
+<td style="text-align: center;">428 MB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Hatanaka + Gzip</td>
+<td style="text-align: center;">37 MB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Parquet</td>
+<td style="text-align: center;">141 MB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Parquet + Gzip</td>
+<td style="text-align: center;">107 MB</td>
+</tr>
+</tbody>
+</table>
+<p>In the best case, the size of the compressed parquet is usually 3 times larger than the <em>Hatanaka + Gzip combo</em>, however there may be still some room for improvement if data within the file is organized to exploit parquet features such as <a href="https://www.jumpingrivers.com/blog/parquet-file-format-big-data-r/"><em>run length</em> encoding or RLE</a>.</p>
+<p>Specifically, RLE can significantly compress GNSS data containing repetitive sequences, such as timestamps that appear multiple times within the file. By reorganizing data within the Parquet file to exploit such features, it may be possible to achieve a more favorable compression ratio.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>Based on the analyzed data, several key observations emerge:</p>
+<ul>
+<li><strong>Ease of use:</strong>
+<ul>
+<li>Simplified Preprocessing: Parquet files offer a streamlined approach to reading GNSS measurements compared to RINEX. The complex multi-step process involving gzip decompression, Hatanaka decompression, and parsing to binary is significantly simplified.</li>
+<li>Direct Integration: Parquet files can be directly downloaded and seamlessly integrated into data analysis frameworks like Pandas, eliminating the need for extensive preprocessing.</li>
+</ul></li>
+<li><strong>Data Volume:</strong> The combination of Hatanaka and Zip compression still offers a much smaller file size than <em>parquet</em> (on a ratio of 1 to 3), but using features such as run-length encoding (REL) may help reducing the parquet file size.</li>
+</ul>
+</section>
+<section id="use-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="use-of-ai">Use of AI</h2>
+<p>Artificial Intelligence has been used to polish some text styling and correct some typos. Ideation and data processing has been done by the author.</p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-mao2024global" class="csl-entry" role="listitem">
+Mao, Shuyin, Grzegorz Kłopotek, Yuanxin Pan, and Benedikt Soja. 2024. <span>“Global Ionospheric Modeling Using Multi-GNSS: A Machine Learning Approach.”</span> In <em>IGARSS 2024-2024 IEEE International Geoscience and Remote Sensing Symposium</em>, 5774–77. IEEE.
+</div>
+<div id="ref-pi1997monitoring" class="csl-entry" role="listitem">
+Pi, X, AJ Mannucci, UJ Lindqwister, and CM Ho. 1997. <span>“Monitoring of Global Ionospheric Irregularities Using the Worldwide GPS Network.”</span> <em>Geophysical Research Letters</em> 24 (18): 2283–86.
+</div>
+<div id="ref-siemuri2022systematic" class="csl-entry" role="listitem">
+Siemuri, Akpojoto, Kannan Selvan, Heidi Kuusniemi, Petri Valisuo, and Mohammed S Elmusrati. 2022. <span>“A Systematic Review of Machine Learning Techniques for GNSS Use Cases.”</span> <em>IEEE Transactions on Aerospace and Electronic Systems</em> 58 (6): 5043–77.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Continuously Operating Receiving Station<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/mgfernan\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
