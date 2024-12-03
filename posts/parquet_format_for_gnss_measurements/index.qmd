@@ -1,7 +1,7 @@
 ---
 title: Using Apache parquet to store and process GNSS measurements
 date: 2024-11-25
-image: huge_folder.jpeg
+image: rinex_parquet.png
 description: "Leverage Apache parquet to store and exchange GNSS measurement, usually stored in RINEX (text-based) format. This format can be quickly loaded in data structures such as `pandas` `DataFrame` for efficient data manipulation and processing."
 categories:
   - GNSS
