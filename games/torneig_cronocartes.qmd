@@ -11,6 +11,8 @@ Aquesta pàgina inclou notes, idees i instruccions per muntar un torneig de
 Cronocartes. En particular, es defineixen regles de puntuació, desempats i
 organització de rondes.
 
+## Organització bàsica
+
 Per un torneig en el qual participen 16 *historiadors*:
 
 - A cada partida hi competiran **4 *historiadors*** (necessiteu doncs 4 taules)
