@@ -14,6 +14,7 @@ website:
         - games/status.qmd
         - games/cronocartes/index.qmd
         - games/cronocartas/index.qmd
+        - games/torneig_cronocartes.qmd
       - icon: github
         href: https://github.com/mgfernan
       - icon: instagram

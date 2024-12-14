@@ -1,0 +1,54 @@
+---
+title: "CronoTorneig"
+description: Idees i instruccions per muntar un torneig de Cronocartes
+reference-location: margin
+toc: true
+toc-location: left
+jupyter: python3
+---
+
+Aquesta pàgina inclou notes, idees i instruccions per muntar un torneig de
+Cronocartes. En particular, es defineixen regles de puntuació, desempats i
+organització de rondes.
+
+Per un torneig en el qual participen 16 *historiadors*:
+
+- A cada partida hi competiran **4 *historiadors*** (necessiteu doncs 4 taules)
+- Un cop hi hagi guanyador, la partida continuarà fins que tots els jugadors
+col·loquin les seves cartes. Aquest pas és important perquè cal saber qui queda
+1r, 2n, 3r i 4t. Les puntuacions de cada *historiador* seran les següents:
+    - 1r classificat: 10 punts
+    - 2n classificat: 6 punts
+    - 3r classificat: 4 punts
+    - 4t classificat: 2 punts
+- Els empats per qualsevol posició es desfaran per *mort sobtada*: cada *historiador*
+rebrà una carta i quedarà eliminat en cas que s'equivoqui al posar la carta a la
+línia temporal ja existent de la partida en curs.
+- El torneig s'estructurarà en un total de 5 rondes distribuïdes de la següent manera:
+    - Rondes classificatòries: **3 rondes en format suís**. D'una ronda a la següent, els *historiadors* s'agruparan per puntuació: els 4 primers aniran a una
+    taula, els 4 segons a una altra i així successivament. D'aquesta manera, si un *historiador* ha tingut una mala partida, encara tindrà opcions de guanyar.
+    - Rondes eliminatòries: **semi-final** i **final**. Per la semi-final,
+    s'organitzaran les taules de manera *ponderada*: la primera taula estarà
+    constituïda pel 1r, 4t, 5è i 8è classificat, i a la segona taula hi seran
+    el 2n, 3r, 6è i 7è. El motiu és per tenir dues taules homogènies en tant que
+    nivell dels *historiadors*. Finalment, la taula de la ronda final estarà
+    constituïda pels dos primers classificats de la taula de semi-finals.
+
+## Empat a la gran final
+
+En cas que hi hagi un empat entre els finalistes i totes les cartes s'hagin
+esgotat (com va passar a la final del [2n torneig Cronomaster del Museu
+d'Història de Catalunya](https://mhcat.cat/activitats/educatives_esplais/activitats_culturals/2n_torneig_cronomaster_de_jocs_de_taula)), aquí teniu algunes idees:
+
+- Feu una partida al [Cronocartas Historia de Galicia](./cronocartas/index.qmd)
+- Eliminatòria per [batalla de Burritos](https://boardgamegeek.com/boardgame/274533/throw-throw-burrito)
+- Llençar una moneda
+- Partida d'escacs
+
+Si tot això falla, sempre quedarà una bona llençada de daus. 😜
+
+## Altres consideracions
+
+- **"Handicap"**. Es repartiran cartes addicionals a guanyadors d'edicions anteriors del torneig: una carta addicional per cada edició anterior en què ha resultat guanyador.
+Exemple: En Severí ha guanyat el 1r i el 2n torneigs de Cronocartes, per tant,
+a la 3a edició del torneig començarà amb 9 cartes, en comptes de 7.
