@@ -19,10 +19,10 @@ Per un torneig en el qual participen 16 *historiadors*:
 - Un cop hi hagi guanyador, la partida continuarà fins que tots els jugadors
 col·loquin les seves cartes. Aquest pas és important perquè cal saber qui queda
 1r, 2n, 3r i 4t. Les puntuacions de cada *historiador* seran les següents:
-    - 1r classificat: 10 punts
-    - 2n classificat: 6 punts
-    - 3r classificat: 4 punts
-    - 4t classificat: 2 punts
+    - 1r classificat: 5 punts
+    - 2n classificat: 3 punts
+    - 3r classificat: 2 punts
+    - 4t classificat: 1 punts
 - Els empats per qualsevol posició es desfaran per *mort sobtada*: cada *historiador*
 rebrà una carta i quedarà eliminat en cas que s'equivoqui al posar la carta a la
 línia temporal ja existent de la partida en curs.
@@ -54,3 +54,10 @@ Si tot això falla, sempre quedarà una bona llençada de daus. 😜
 - **"Handicap"**. Es repartiran cartes addicionals a guanyadors d'edicions anteriors del torneig: una carta addicional per cada edició anterior en què ha resultat guanyador.
 Exemple: En Severí ha guanyat el 1r i el 2n torneigs de Cronocartes, per tant,
 a la 3a edició del torneig començarà amb 9 cartes, en comptes de 7.
+- **Partides de tres *historiadors***: Repartiu 8 cartes en comptes de 7 per
+mantenir el nivell de dificultat similar que en partides de 4 historiadors
+amb 7 cartes. Per exemple, amb 4 historiadors hi ha 28 esdeveniments ($4 \cdot 7 = 28$), mentre que amb 3 historiadors, si es reparteixen 8 cartes, n'hi haurà 24 ($3 \cdot 8 = 24$).
+
+## Agraïments
+
+Gràcies a [Monica Mallo](https://www.instagram.com/violetahill2018/) i [Guillem Guasch](https://www.instagram.com/guaskan/) per la revisió del contingut d'aquesta pàgina.
