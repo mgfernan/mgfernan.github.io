@@ -77,6 +77,35 @@ gtag('js', new Date());
 gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -157,6 +186,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
   <li><a href="#organització-bàsica" id="toc-organització-bàsica" class="nav-link active" data-scroll-target="#organització-bàsica">Organització bàsica</a></li>
   <li><a href="#empat-a-la-gran-final" id="toc-empat-a-la-gran-final" class="nav-link" data-scroll-target="#empat-a-la-gran-final">Empat a la gran final</a></li>
   <li><a href="#altres-consideracions" id="toc-altres-consideracions" class="nav-link" data-scroll-target="#altres-consideracions">Altres consideracions</a></li>
+  <li><a href="#agraïments" id="toc-agraïments" class="nav-link" data-scroll-target="#agraïments">Agraïments</a></li>
   </ul>
 </nav>
 </nav>
@@ -199,10 +229,10 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <li>A cada partida hi competiran <strong>4 <em>historiadors</em></strong> (necessiteu doncs 4 taules)</li>
 <li>Un cop hi hagi guanyador, la partida continuarà fins que tots els jugadors col·loquin les seves cartes. Aquest pas és important perquè cal saber qui queda 1r, 2n, 3r i 4t. Les puntuacions de cada <em>historiador</em> seran les següents:
 <ul>
-<li>1r classificat: 10 punts</li>
-<li>2n classificat: 6 punts</li>
-<li>3r classificat: 4 punts</li>
-<li>4t classificat: 2 punts</li>
+<li>1r classificat: 5 punts</li>
+<li>2n classificat: 3 punts</li>
+<li>3r classificat: 2 punts</li>
+<li>4t classificat: 1 punts</li>
 </ul></li>
 <li>Els empats per qualsevol posició es desfaran per <em>mort sobtada</em>: cada <em>historiador</em> rebrà una carta i quedarà eliminat en cas que s’equivoqui al posar la carta a la línia temporal ja existent de la partida en curs.</li>
 <li>El torneig s’estructurarà en un total de 5 rondes distribuïdes de la següent manera:
@@ -227,7 +257,12 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="altres-consideracions">Altres consideracions</h2>
 <ul>
 <li><strong>“Handicap”</strong>. Es repartiran cartes addicionals a guanyadors d’edicions anteriors del torneig: una carta addicional per cada edició anterior en què ha resultat guanyador. Exemple: En Severí ha guanyat el 1r i el 2n torneigs de Cronocartes, per tant, a la 3a edició del torneig començarà amb 9 cartes, en comptes de 7.</li>
+<li><strong>Partides de tres <em>historiadors</em></strong>: Repartiu 8 cartes en comptes de 7 per mantenir el nivell de dificultat similar que en partides de 4 historiadors amb 7 cartes. Per exemple, amb 4 historiadors hi ha 28 esdeveniments (<span class="math inline">\(4 \cdot 7 = 28\)</span>), mentre que amb 3 historiadors, si es reparteixen 8 cartes, n’hi haurà 24 (<span class="math inline">\(3 \cdot 8 = 24\)</span>).</li>
 </ul>
+</section>
+<section id="agraïments" class="level2">
+<h2 class="anchored" data-anchor-id="agraïments">Agraïments</h2>
+<p>Gràcies a <a href="https://www.instagram.com/violetahill2018/">Monica Mallo</a> i <a href="https://www.instagram.com/guaskan/">Guillem Guasch</a> per la revisió del contingut d’aquesta pàgina.</p>
 
 
 </section>
