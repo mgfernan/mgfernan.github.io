@@ -6,10 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-10-29">
-<meta name="description" content="The rapid growth of GNSS receiver networks, coupled with the proliferation of constellations and signals, has led to an exponential increase in data volume. This post uses the GNSS data repository of the CDDIS GNSS receiver network to illustrate this trend.">
+<meta name="author" content="Miquel Garcia">
+<meta name="dcterms.date" content="2024-12-18">
+<meta name="description" content="Some takeaways that I learned during my journey as CTO at Rokubun, leading the technological strategy at the company.">
 
-<title>On the exploding size of GNSS measurement data files – mgfernan</title>
+<title>On my journey as CTO at Rokubun – mgfernan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -71,10 +38,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-f2a1071e85750ec973bbb8a8f120da0f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-eab9dbc1ad39271d7da09bb6f6b35665.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-659650fc26dc25888fc1474f317bb8ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +83,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -182,17 +149,17 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">On the exploding size of GNSS measurement data files</h1>
+      <h1 class="title">On my journey as CTO at Rokubun</h1>
                   <div>
         <div class="description">
-          The rapid growth of GNSS receiver networks, coupled with the proliferation of constellations and signals, has led to an exponential increase in data volume. This post uses the GNSS data repository of the CDDIS GNSS receiver network to illustrate this trend.
+          Some takeaways that I learned during my journey as CTO at Rokubun, leading the technological strategy at the company.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">GNSS</div>
+                <div class="quarto-category">Professional</div>
                 <div class="quarto-category">English</div>
               </div>
                   </div>
@@ -201,11 +168,17 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Miquel Garcia </p>
+            </div>
+    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 29, 2024</p>
+        <p class="date">December 18, 2024</p>
       </div>
     </div>
     
@@ -215,8 +188,25 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-was-rokubun" id="toc-what-was-rokubun" class="nav-link active" data-scroll-target="#what-was-rokubun">What was Rokubun?</a></li>
+  <li><a href="#achievements" id="toc-achievements" class="nav-link" data-scroll-target="#achievements">Achievements</a></li>
+  <li><a href="#why-we-had-to-close" id="toc-why-we-had-to-close" class="nav-link" data-scroll-target="#why-we-had-to-close">Why we had to close?</a></li>
+  <li><a href="#things-that-we-did-right" id="toc-things-that-we-did-right" class="nav-link" data-scroll-target="#things-that-we-did-right">Things that we did right</a></li>
+  <li><a href="#some-takeaways" id="toc-some-takeaways" class="nav-link" data-scroll-target="#some-takeaways">Some takeaways</a></li>
+  <li><a href="#final-words" id="toc-final-words" class="nav-link" data-scroll-target="#final-words">Final words</a></li>
+  <li><a href="#ai-usage-in-this-post" id="toc-ai-usage-in-this-post" class="nav-link" data-scroll-target="#ai-usage-in-this-post">AI usage in this post</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -224,148 +214,72 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 
 
 
-<p>For those of you who work with GNSS data processing, have you ever wondered how much data do servers such as CDDIS or EUREF, who store historic GNSS raw measurement data, need to handle?</p>
-<p>If your use case is to perform a positioning session for a single receiver maybe not, but I bet the situation is different if you are building GNSS products (e.g.&nbsp;estimation of GNSS satellite orbits and clocks, ionospheric monitoring, …), where a worldwide distribution of receivers (and data) is not only desirable but mandatory.</p>
-<p>In order to answer this question, I have implemented a script that lists the files stored in the GNSS raw measurement data folders provided <a href="https://cddis.nasa.gov">CDDIS server</a>. In particular, I selected the daily files with 30 seconds sampling rate. In order not to overwhelm the servers, just one day for each year (January 1st) was processed. Then, the code included below in this post has been used to plot the number of (unique) stations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as well as the median file size. The total folder size has been also computed.</p>
-<p>Initially, one may think that the volume increase could be due to two factors:</p>
-<ul>
-<li>Increased number of stations</li>
-<li>Increase of file size due to new constellations and new signals</li>
-</ul>
-<div id="8b1e0fae" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">'./data/folder_*.txt'</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># List of all dataframes</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data files</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> datetime.datetime.strptime(f, <span class="st">'./data/folder_%Y_%j.txt'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> pd.read_csv(f, delimiter<span class="op">=</span><span class="st">"\s+"</span>, names<span class="op">=</span>[<span class="st">'file'</span>, <span class="st">'size'</span>])</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">'date'</span>] <span class="op">=</span> date</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">'station'</span>] <span class="op">=</span> data[<span class="st">'file'</span>].<span class="bu">str</span>[:<span class="dv">4</span>].<span class="bu">str</span>.lower()</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    dfs.append(data)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate all dataframes</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat(dfs)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> df.groupby(<span class="st">'date'</span>).agg(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    n_stations<span class="op">=</span>(<span class="st">'station'</span>, <span class="kw">lambda</span> x: x.nunique()),</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    median_size<span class="op">=</span>(<span class="st">'size'</span>, <span class="st">'median'</span>),</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    total_size<span class="op">=</span>(<span class="st">'size'</span>, <span class="st">'sum'</span>))</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># colors</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>blue <span class="op">=</span> <span class="st">'#0072bd'</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> <span class="st">'#a2142f'</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Evolution of GNSS data folder size</span><span class="ch">\n</span><span class="st">CDDIS network (daily 30s data files)"</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax1.plot(stats.index, stats[<span class="st">'n_stations'</span>], label<span class="op">=</span><span class="st">"Number of stations"</span>, c<span class="op">=</span>blue)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>ax2.plot(stats.index, stats[<span class="st">'median_size'</span>] <span class="op">/</span> <span class="fl">1.0e6</span>, label<span class="op">=</span><span class="st">"Median file size [Mb]"</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, c<span class="op">=</span> red)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>ax2.plot(stats.index, stats[<span class="st">'total_size'</span>] <span class="op">/</span> <span class="fl">1.0e9</span>, label<span class="op">=</span><span class="st">"Total folder size [Gb]"</span>, c<span class="op">=</span> red)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Number of stations [count]'</span>, color<span class="op">=</span>blue)</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'File size [Mb] or Folder size [Gb]'</span>, color<span class="op">=</span>red)</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, colors<span class="op">=</span>blue)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, colors<span class="op">=</span>red)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>ax1.legend(loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>ax2.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.png" width="758" height="375" class="figure-img"></p>
-<figcaption>GNSS data volume over years for CDDIS network</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>But looking at the figure is clear that the main driving factor for the volume size increase is the larger file size: note that from 2012 the number of stations has stabilized and yet the total size has suffered a large increase (following the trend of the file size). Note also that most of the folders contain duplicated data: data from the same station might be stored in both RINEX v2 and v3 (althought this may change in the future, as V2 support is winding down).</p>
-<p>In order to illustrate the causes of the file size increase, let’s take a particular station (<code>EBRE</code>, Observatori de l’Ebre, Spain) as an example. All files studied are compressed using Hatanaka and binary zip. The constellations and bands tracked in 4 particular files in the past are summarized in the following table:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">2008-01-01</th>
-<th style="text-align: center;">2012-01-01</th>
-<th style="text-align: center;">2016-01-01</th>
-<th style="text-align: center;">2018-01-01</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Filename</td>
-<td style="text-align: center;"><code>ebre0010.08d</code></td>
-<td style="text-align: center;"><code>ebre0010.12d</code></td>
-<td style="text-align: center;"><code>EBRE00ESP_R_20160010000_01D_30S_MO.rnx</code></td>
-<td style="text-align: center;"><code>EBRE00ESP_R_20180010000_01D_30S_MO</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Constellations</td>
-<td style="text-align: center;">GPS</td>
-<td style="text-align: center;">GPS</td>
-<td style="text-align: center;">GPS+GLO+GAL+BDS</td>
-<td style="text-align: center;">GPS+GLO+GAL+BDS</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Number of bands</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">6 (incl.&nbsp;Doppler observables)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Rinex version</td>
-<td style="text-align: center;">2.11</td>
-<td style="text-align: center;">2.11</td>
-<td style="text-align: center;">3.02</td>
-<td style="text-align: center;">3.02</td>
-</tr>
-</tbody>
-</table>
-<p>It is clear then that the qualitative jump between 2012 to 2016 is caused by the recording of additional constellations (most notably Galileo and Beidou, which have associated many more signals). Additional increase in the file size is the inclusion of Doppler observables (in the case of <code>EBRE</code> sometime between 2016 and 2018).</p>
-<section id="conclusions" class="level2">
-<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
-<p>Based on the analyzed data, several key observations emerge:</p>
-<ul>
-<li><strong>Data Volume:</strong> For the CDDIS network, the daily data volume currently hovers around 2.5 GB, translating to approximately 1 TB/year. This figure excludes high-rate datasets recorded at 1-second intervals, which significantly increase the overall volume (at least by a factor of 30).</li>
-<li><strong>Station Count:</strong> The number of stations within the CDDIS network has remained relatively stable at around 500 since 2014, which discards this parameter as the main cause for the volume increase.</li>
-<li><strong>File size:</strong> is the actual responsible of the overall folder size increase (rather than the station count). A notable surge in file and folder sizes started occuring in 2016, primarily due to the introduction of new constellations, associated signals, and the inclusion of additional observables such as e.g.&nbsp;Doppler observables.</li>
-</ul>
-<p>The substantial increase in data volume poses challenges beyond mere storage considerations. The RINEX format, while human-readable, is not optimized for machine processing, potentially hindering applications that require the analysis of large datasets (Big data, AI/ML, …). To address this limitation, alternative binary (machine-friendly) formats should be considered as a complementary solution to enhance processing efficiency: a preliminary analysis show that while loading (parsing) a RINEX format in Python may take several tens of seconds (for a 5h 1-second interval RINEX V3 file), the same file stored in <a href="https://parquet.apache.org/">Apache Parquet</a> takes little more than a second to load.</p>
+<p>For the last ten years I’ve been Chief Technological Officer (CTO) at Rokubun, a company I co-founded and co-managed with my colleague <a href="https://www.linkedin.com/in/xavierbanque/">Xavier Banque</a>. Unfortunately, we had to take the difficult decision of shutting it down.</p>
+<p>Drawing on my experience at Rokubun, I’d like to share some insights and some takeaways that could hopefully help other entrepreneurs at similar fields in which we operated.</p>
+<p><img src="rokubun.jpg" class="img-fluid"></p>
+<section id="what-was-rokubun" class="level2">
+<h2 class="anchored" data-anchor-id="what-was-rokubun">What was Rokubun?</h2>
+<p>Rokubun aimed at developing navigation and positioning solutions<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> with the goal of creating a product or service that could generate recursive sales. Technological innovation was an important piece in this plan, as an engine to increase the technological and scientific capital of the company ahd keep its portfolio competitve with the new developments in the navigation ecosystem.</p>
+<p>Rokubun started as a consultancy business for satellite-based navigation technology, thus leveraging our past expertise in the field. In practice, this meant that we bid for tenders issued by the European Space Agency (ESA) and other funding vehicles. In fact, Rokubun was born as part of the ESA Business Incubation Programme that was established in Barcelona in 2015.</p>
+<p>We sticked to this plan and along the way we created Jason, a GNSS Post Processing Kinematic service in the cloud, as well as two hardware products: the single-frequency GNSS data logger Argonaut specifically tuned for drone applications and photogrammetry, and its dual frequency evolution MEDEA GNSS computer. Despite the various market pivots that Rokubun has undergone during this journey, our plan went well up to a certain point, until it started to show some weaknesses.</p>
 </section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>Thanks to NASA (and CDDIS) to provide the data used to elaborate this blog post.</p>
+<section id="achievements" class="level2">
+<h2 class="anchored" data-anchor-id="achievements">Achievements</h2>
+<p>While I risk sounding boastful, I’d like to share some of Rokubun’s achievements:</p>
+<ul>
+<li>We managed to <strong>keep operations for 10 years</strong>, including a pandemic in the middle<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li><strong>From 2 to 14 employees</strong> in 10 years with little external investment, mostly based on organic growth through revenues from contracts and grants.</li>
+<li>Earned <strong>a reputation within the navigation ecosystem</strong>. Professionals and colleagues in the sector know Rokubun, and I would venture to state that in a positive way: as a potential partner to be trusted. This helped us to build a strong professional network for the company to seek for contracts.</li>
+<li>Built a <strong>streamlined process to craft winning proposals</strong>. This included a strategy and plan to quickly seek partners and build a solid consortium for a tender/grant, generate valuable technical content that demonstrated our capabilities, and set up a methodology to ease and speed up the actual proposal writing in a collaborative way with our partners.</li>
+<li>Achieved a <strong>robust and company-wide software development strategy</strong>, a fundamental step to further achieve technical certifications such as ISO-26262, SOTIF, … This included a Continuous Integration and Continuous Deployment infrastructure based on Gitlab that was in the workflow of all staff. Even the ones in charge of research activities and responsibles of the company back office.</li>
+</ul>
 </section>
-<section id="use-of-ai" class="level2">
-<h2 class="anchored" data-anchor-id="use-of-ai">Use of AI</h2>
-<p>Artificial Intelligence has been used to polish some text styling and correct some typos. Ideation and data processing has been done by the author.</p>
+<section id="why-we-had-to-close" class="level2">
+<h2 class="anchored" data-anchor-id="why-we-had-to-close">Why we had to close?</h2>
+<p>In short, the main reason has been <strong>insufficient cashflow</strong>, which did not allow us to continue with operations. But, what caused this cashflow tension? There is not a single reason, but a combination of them, both external and internal. I would probably highlight the following:</p>
+<ul>
+<li>As the famous adage says (reworded for the point in case): <em>“Once a consultancy, always a consultancy.”</em>. Pivoting from a consultancy model to a product-based business proved to be more complex than we initially anticipated. While organic growth was part of the strategy, it ultimately limited resources dedicated to product development compared to established companies in the sector. Attracting talent and investment for product development became difficult as we lacked significant commercial traction.</li>
+<li>Lack of certifications. Investing in software certification (ISO26262, SOTIF) was crucial for our long-term vision (for the type of product we wanted to develop and our target market). However, we have not been able to secure the necessary funds and time to cultivate a team mindset around achieving the certification. While initial steps were taken, achieving this goal would have required a more focused allocation of resources and a strategic team culture shift. Ultimately, this impacted our ability to access certain customers requiring specific certifications. This applied even for the process of tendering and grant preparation in various funding vehicles.</li>
+<li>As a Spanish company, an uphill battle to access <a href="https://navisp.esa.int/">ESA’s NAVISP</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> projects that we did not manage to win. This was totally out of our control, but something that severly limited our access to funds for ESA projects in the navigation sector, specially in the last years. As you might know, these projects require the approval of ESA’s National Delegations, but despite our efforts to revert the situation, we did not manage to change our odds in accessing funds for these projects.</li>
+</ul>
+</section>
+<section id="things-that-we-did-right" class="level2">
+<h2 class="anchored" data-anchor-id="things-that-we-did-right">Things that we did right</h2>
+<p>Despite all this, I believe that Rokubun’s accomplishments can be largely attributed to the following:</p>
+<ul>
+<li><strong>Networking</strong> as a core activity in the company. This implied participate in conferences, fairs, hackathons and workshops. It seems a rather obvious activity to do in a company, but the truth is that day-to-day activities can make you underestimate its importance. Networking will be crucial to build partnerships for consortiums, requests for quotations, find potential customers, … This brings me to the following point, <em>volunteer!</em>.</li>
+<li><strong>We volunteered</strong>. A lot. Even if it implied some cost. Consider this cost as marketing expenses. This will help you build your brand and establish a positive reputation. Eventually, your efforts will pay off as your peers recognize your company’s ability to deliver and build trust. Some ideas: look for hackathons in your field and make yourself available to participate as mentor and, if cashflow allows, consider sponsorship. If you are on the technical side of things, volunteer to review scientific and technical journals and reach your network to inquire for opportunities to chair conference sessions. These activities can significantly increase your visibility and credibility.</li>
+<li><strong>Be realistic on your odds to winning tenders</strong>, especially when you’re a small, early-stage company. Evaluators may perceive a higher risk in awarding projects to such firms. Consider partnering with larger companies to increase your chances of success.</li>
+<li><strong>Reaching the big guys</strong>. We have been always very proactive when talking to technical responsibles from the big companies in our sector. Technical workshops where a great opportunity to mingle with them and let them know the company. Moreover, you can always “<em>play the SME card</em>”: public tenders and grants usually foster collaboration with new actors and give extra points to consortiums in which SMEs have significant presence.</li>
+<li><strong>Cashflow management</strong>. As inexperienced managers as we were, specially at the beginning, one of the first (and best) decisions we took was to put in place a analytical cashflow tool. We used a simple spreadsheet for this, but we were strict and accurate on our monthly expenditure. This allowed us to make reliable predictions and properly plan ahead to estimate our runway. I know this is usual practice in company management, but it was something we were somewhat overlooking at the very beginning.</li>
+<li><strong>Underpromise and overdeliver</strong> when establishing objectives and performance figures in project proposals. You will have to find a sweet spot between what is feasible and and what is attractive for the customer to get the contract. Make sure you keep in reserve those nice-to-have features that entail a higher risk (of implementation, demonstration or test). Once you have the resources within the project you will be able to develop them and give an extra value to the project outcome. Even if these features are not realized in the end, you will still be successful in the project because the expectations of all parties will be aligned.</li>
+<li><strong>Compensate low salaries with perks</strong>. At Rokubun we could not pay high salaries. As a consultancy with minimal investment, we did not have the resources to pay high wages. We were aware of this, and most importantly, employees were also aware of this. Rokubun compensated this limitation with flexible working hours, more holidays, a remote work policy and (we believe) engaging projects.</li>
+<li><strong>Full transparency</strong> with Rokubun’s employees. Salary scales were public for all employees, salary raise criteria and objectives were also published in our internal Wiki page so everyone was aware of them. And we always tried to provide with a quantitative update on the achievement of each objective in (more or less) regular plenary meetings.</li>
+<li><strong>Four eyes see more than two</strong>. The company operated on a consensus-based model between Xavi and myself. This ensured that we considered as many possible angles and consequences of our decisions. While we initially had concerns about a potential deadlock due to our equal shareholding, this never materialized. In fact, our shared ownership encouraged open dialogue and adaptability between us, which I believe ended up as a very positive asset for the company.</li>
+<li>And probably the most important point: <strong>we kept a huge whiteboard to write ideas, draw or sketch</strong>. I am really going to miss it.</li>
+</ul>
+<p><img src="whiteboard.jpg" class="img-fluid"></p>
+</section>
+<section id="some-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="some-takeaways">Some takeaways</h2>
+<p>The following is a set of some topics and points to take into account for a small technological company in the technological sector:</p>
+<ul>
+<li><strong>Plan for project evaluation periods</strong>. Keep in mind that the resolution of grants and tenders take time. In ESA contracts (tenders) it may take a couple of months, while EUSPA and European Commission may even take a bit longer. Make sure you secure your cashflow to sustain operations during this interim period. In a similar topic, revision and approval of interim reports may take as long as 6 months in certain institutions, so make sure your cashflow can withstand these time delays.</li>
+<li>In ESA projects, if in two months there is no positive answer regarding a submitted proposal, it’s likely that the contract has been given to another consortium.</li>
+<li>I’ve learned this elsewhere, but is very true: “The disposition of a partner writing a proposal will be the disposition when executing a project”. Which means, if a partner is delayed providing contributions when preparing the proposal of the tender, expect delays when working in the project.</li>
+<li><strong>Pivoting</strong>, hardware is expensive and unforgiving, mistakes are costly.</li>
+<li><strong>“Sweets that can turn bitter”</strong>. One of our service providers used these words to describe public funds. Be careful with them, no matter how attractive they may seem. Make sure you are perfectly aware of all the conditions. There will be clauses in the fund agreement that will pass unnoticed. This is a fact. My practical recommendation? treat public funds as some sort of credit that needs to be returned at some point. Plan your cashflow in a way that you need to return between 10% and 20% of the amount granted. In this way you will be prepared for any possible incidentals you made during the audit process.</li>
+<li><strong>Team management</strong>, if you are a CTO like myself, expect very short time spans of focused work. Avoid delegating tasks that disrupt the team’s focus: be prepared to do them yourself if need be, otherwise delays will happen. Make sure to do a good planning so that unexpected tasks can be smoothly integrated into the task pipeline of the team.</li>
+<li><strong>Consultancy is seasonal</strong> as far as cash source is concerned. As soon as you get a project approved, start looking for the next opportunity. Consider also a line of credit despite its associated financial cost.</li>
+</ul>
+</section>
+<section id="final-words" class="level2">
+<h2 class="anchored" data-anchor-id="final-words">Final words</h2>
+<p>Working at Rokubun has been certainly a stimulating experience: a rollercoaster. It has been a a source of worries some times but a constant flow of learning experiences and I value, in particular, the social aspect of this adventure: the people I met and the pleasure to work side-by-side with very talented professionals.</p>
+</section>
+<section id="ai-usage-in-this-post" class="level2">
+<h2 class="anchored" data-anchor-id="ai-usage-in-this-post">AI usage in this post</h2>
+<p>While I did use Gemini to polish some parts of the text (mostly style corrections and English typos), this post has been ideated, organized and written by me.</p>
 
 
 </section>
@@ -374,7 +288,9 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>The same folder may contain data for the same receiver with different formats (e.g.&nbsp;RINEX v2 and RINEX v3), the script below makes sure only unique stations are computed.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Are you familiar with satellite navigation systems (GNSS) such as GPS or Galileo?<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This was in part due to the nature of our work, that allowed us to temporarily move our operations to a fully remote approach. However, while I appreciate the flexibility of remote work, I still believe that face-to-face meetings and discussions are essential for effective collaboration, specially with more junior profiles. This applies even for software development tasks such as pair programming and even code reviews.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>ESA NAVISP is the ESA programme for navigation-related projects.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
