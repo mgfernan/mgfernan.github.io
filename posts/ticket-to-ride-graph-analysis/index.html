@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-f2a1071e85750ec973bbb8a8f120da0f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1092c56c6cadf2eb47b1bc8063ab382a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-eab9dbc1ad39271d7da09bb6f6b35665.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-4199613cf88671ef78ec1dc4bae0f3bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -250,16 +250,16 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <li><a href="https://networkx.org/">NetworkX</a> for graph processing and above all, to <strong>find the shortest path between two stations</strong> (nodes).</li>
 </ul>
 <p>First we will need to install some required libraries as well as import necessary modules</p>
-<div id="27ff6f32" class="cell" data-execution_count="1">
+<div id="8d73c1b5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install matplotlib networkx pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fb5ff457" class="cell" data-execution_count="2">
+<div id="5ab2c428" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The following cells contain some constants used in the notebook as well as the links to the CSVs that contain the Tracks and routes</p>
-<div id="f1b094fb" class="cell" data-execution_count="3">
+<div id="e52b919c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TRACK_LENGTH_COLUMN <span class="op">=</span> <span class="st">'length'</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>FROM_COLUMN <span class="op">=</span> <span class="st">'from'</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>TO_COLUMN <span class="op">=</span> <span class="st">'to'</span></span>
@@ -268,7 +268,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>TICKETS_CSV_FILE <span class="op">=</span> <span class="st">'Ticket_to_ride - Tickets.csv'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First let’s load the Track CSV, this will be used to visualize the track network as a mathetmatical graph (of nodes/stations and edges/tracks). The CSV contains the two stations for each track as well as their associated color and lenghts (number of wagons required to complete the track)</p>
-<div id="e215f6ce" class="cell" data-execution_count="4">
+<div id="2718854f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(TRACKS_CSV_FILE)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[TRACK_LENGTH_COLUMN] <span class="op">=</span> pd.to_numeric(df[TRACK_LENGTH_COLUMN])</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,7 +335,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <li>Track distribution for each color</li>
 </ul>
 <p>In addition, we can use the <code>DataFrame</code> to create the <strong>graph</strong> using the <code>networkx</code> library and make a visual representation of the track network</p>
-<div id="5d140db4" class="cell" data-execution_count="5">
+<div id="61ea85d7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a directed graph with weighted edges</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> nx.from_pandas_edgelist(df, FROM_COLUMN, TO_COLUMN, edge_attr<span class="op">=</span>TRACK_LENGTH_COLUMN, create_using<span class="op">=</span>nx.Graph())</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -358,7 +358,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 </div>
 </div>
 <p>The advantage of modeling the track network as a graph is that we can use already existing libraries to compute the shortest path between two stations (both the passing stations as well as the total length), as in the following example</p>
-<div id="0d43d049" class="cell" data-execution_count="6">
+<div id="250687bb" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>FROM <span class="op">=</span> <span class="st">'El Paso'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DESTINATION <span class="op">=</span> <span class="st">'Raleigh'</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -376,7 +376,7 @@ The length for the shortes path is: 12</code></pre>
 The length for the shortes path is: 12</code></pre>
 <p>These methods (specially <code>nx.shortest_path_length</code>) are very relevant to reverse engineer the ticket cards (that give points if a player completes a route). Basically we need to know how the points awarded per card is related to the shortest path.</p>
 <p>To do so, we will load the Ticket CSV into a <code>DataFrame</code> and compute the shortest path for each card:</p>
-<div id="01a94b56" class="cell" data-execution_count="7">
+<div id="bdd51b05" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Ticket CSV</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_tickets <span class="op">=</span> pd.read_csv(TICKETS_CSV_FILE)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -441,7 +441,7 @@ The length for the shortes path is: 12</code></pre>
 </div>
 </div>
 <p>At this point we can realise that the points awarded per route are in fact equivalent (at least on the most cases) with the lenghts (i.e.&nbsp;total number of wagons required to complete the route), which makes sense.</p>
-<div id="760938c0" class="cell" data-execution_count="8">
+<div id="3a442913" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.plot(df_tickets[TRACK_LENGTH_COLUMN], df_tickets[<span class="st">'points'</span>], <span class="st">'o'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Shortest route length [number of wagons]'</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Ticket card points'</span>)</span>

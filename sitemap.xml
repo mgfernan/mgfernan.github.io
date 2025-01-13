@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mgfernan.com/blog.html</loc>
-    <lastmod>2024-12-18T12:13:46.456Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html</loc>
-    <lastmod>2024-12-18T12:13:46.464Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/ticket-to-ride-graph-analysis/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.484Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/parquet_format_for_gnss_measurements/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.476Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/cronocartas/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.456Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/torneig_cronocartes.html</loc>
-    <lastmod>2024-12-18T12:13:46.460Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/about.html</loc>
-    <lastmod>2024-12-18T12:13:46.456Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/cronocartes/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.460Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/status.html</loc>
-    <lastmod>2024-12-18T12:13:46.460Z</lastmod>
-  </url>
-  <url>
     <loc>https://mgfernan.com/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.464Z</lastmod>
+    <lastmod>2025-01-13T08:43:26.581Z</lastmod>
   </url>
   <url>
     <loc>https://mgfernan.com/posts/farewell-rokubun/rokubun.html</loc>
-    <lastmod>2024-12-18T12:13:46.468Z</lastmod>
+    <lastmod>2025-01-13T08:43:26.587Z</lastmod>
   </url>
   <url>
-    <loc>https://mgfernan.com/posts/codigo-segredo/codigo_segredo.html</loc>
-    <lastmod>2024-12-18T12:13:46.464Z</lastmod>
+    <loc>https://mgfernan.com/posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html</loc>
+    <lastmod>2025-01-13T08:43:26.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/cronocartes/index.html</loc>
+    <lastmod>2025-01-13T08:43:26.581Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/status.html</loc>
+    <lastmod>2025-01-13T08:43:26.581Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/about.html</loc>
+    <lastmod>2025-01-13T08:43:26.574Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/blog.html</loc>
+    <lastmod>2025-01-13T08:43:26.574Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/cronocartas/index.html</loc>
+    <lastmod>2025-01-13T08:43:26.577Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/torneig_cronocartes.html</loc>
+    <lastmod>2025-01-13T08:43:26.581Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/ticket-to-ride-graph-analysis/index.html</loc>
+    <lastmod>2025-01-13T08:43:26.602Z</lastmod>
   </url>
   <url>
     <loc>https://mgfernan.com/posts/gnss_data_data_volume/index.html</loc>
-    <lastmod>2024-12-18T12:13:46.476Z</lastmod>
+    <lastmod>2025-01-13T08:43:26.594Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/codigo-segredo/codigo_segredo.html</loc>
+    <lastmod>2025-01-13T08:43:26.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/parquet_format_for_gnss_measurements/index.html</loc>
+    <lastmod>2025-01-13T08:43:26.598Z</lastmod>
   </url>
 </urlset>
