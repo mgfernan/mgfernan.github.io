@@ -263,7 +263,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <li>eases the loading of a <code>crx.gz</code> file with a single function call (that does not rely under the hood with complex <code>subprocess</code> system calls to external programs).</li>
 </ul>
 <p>Something on those lines:</p>
-<div id="6398bc72" class="cell" data-execution_count="1">
+<div id="5cb9432f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The code makes use of the external roktools library, installed with the pip</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># command</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> roktools <span class="im">import</span> hatanaka</span>
@@ -324,7 +324,7 @@ Experimental feature
 <h3 class="anchored" data-anchor-id="results">Results</h3>
 <p>The following figure shows how the loading times compare between these methods. As expected, the <em>direct</em> method offers a much faster performance (a consistent 25% of improvement relative to the <em>system</em> approach) accross all file sizes.</p>
 <p>Note that the <em>parquet</em> strategy cannot be directly compared to the <em>direct</em> and <em>system</em> strategies as it is an unfair comparison (i.e.&nbsp;no parsing of text file is performed). However it is provided for completeness, to illustrate the potential benefits of using a binary format to store the data.</p>
-<div id="81c52e7a" class="cell" data-execution_count="2">
+<div id="ea977521" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -370,7 +370,7 @@ Experimental feature
 </div>
 </div>
 <p>For a more quantitative evaluation, the loading times (in seconds) for each of the strategies and for the various file sizes are collated in the following table</p>
-<div id="aee1a3bf" class="cell" data-execution_count="3">
+<div id="2cf642c2" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
