@@ -277,7 +277,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <li><p><strong>Storage with pandas</strong>: Once parsed, the data is seamlessly converted into a <a href="https://pandas.pydata.org/"><code>pandas</code></a> <code>DataFrame</code>. Pandas, a popular Python library for data manipulation, offers a built-in function for writing DataFrames directly to Parquet format.</p></li>
 </ul>
 <p>This approach simplifies the conversion process and is shown in the code snippet below:</p>
-<div id="05d0a428" class="cell" data-execution_count="1">
+<div id="41e33f5b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> roktools <span class="im">import</span> rinex</span>
@@ -413,7 +413,7 @@ gtag('config', 'G-J0Q5PFB35Q', { 'anonymize_ip': true});
 <section id="tip-compute-the-code-minus-carrier-observable" class="level2">
 <h2 class="anchored" data-anchor-id="tip-compute-the-code-minus-carrier-observable">Tip: compute the code-minus-carrier observable</h2>
 <p>With the column layout proposed for the <code>parquet</code> format, extracting observables such as the <code>CMC</code> (<em>code-minus-carrier</em>), that use data for the same tracking channel, becomes straightforward:</p>
-<div id="2fea5c39" class="cell" data-execution_count="2">
+<div id="0968846d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="st">'G041C'</span></span>
@@ -467,11 +467,11 @@ Avoid <code>for</code> loops
 </div>
 </div>
 <p>As an example, let’s compute the first derivate of the phase (for all signals) and compare it with the Doppler observable (please note that no <code>for</code> has been used in the code):</p>
-<div id="7818d4d8" class="cell" data-execution_count="3">
+<div id="51350d60" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the time derivative of the phase</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'d_phase'</span>] <span class="op">=</span> df.groupby(<span class="st">'signal'</span>)[<span class="st">'phase'</span>].diff()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="93821b45" class="cell" data-execution_count="4">
+<div id="e84d7d57" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="st">'G041C'</span></span>
@@ -503,7 +503,7 @@ Avoid <code>for</code> loops
 <section id="tip-use-merge-to-compute-multifrequency-observables" class="level2">
 <h2 class="anchored" data-anchor-id="tip-use-merge-to-compute-multifrequency-observables">Tip: use <code>merge</code> to compute multifrequency observables</h2>
 <p>Another powerful method to process GNSS data, specially when trying to combine data from different <code>signal</code>, is the database-inherited <code>merge</code> method. This allows to join sections of the <code>DataFrame</code> and quickly build dual-frequency combinations. To illustrate this, let’s compute the <em>geometry-free</em> (or <em>ionospheric</em>) combination.</p>
-<div id="3d5f50c7" class="cell" data-execution_count="5">
+<div id="38508d85" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>channel_a <span class="op">=</span> <span class="st">'1X'</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>channel_b <span class="op">=</span> <span class="st">'5X'</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -524,7 +524,7 @@ Avoid <code>for</code> loops
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> df_a.merge(df_b, on<span class="op">=</span>[<span class="st">'epoch'</span>, <span class="st">'sat'</span>], suffixes<span class="op">=</span>(<span class="st">'_a'</span>, <span class="st">'_b'</span>))</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">'li_m'</span>] <span class="op">=</span> df_merged[<span class="st">'phase_a'</span>] <span class="op">*</span> wavelength_a <span class="op">-</span> df_merged[<span class="st">'phase_b'</span>] <span class="op">*</span>wavelength_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="63adb048" class="cell" data-execution_count="6">
+<div id="c11898e9" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sat <span class="op">=</span> <span class="st">'E04'</span></span>
