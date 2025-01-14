@@ -1,6 +1,6 @@
 ---
 title: Native integration of Hatanaka for Python
-date: 2025-01-06
+date: 2025-01-14
 image: hatanakalib.png
 description: "Native integration of Hatanaka compression in Python via the C-API increases processing speed. Other programming languages such as Rust can also take advantage of this refactoring."
 categories:
@@ -10,15 +10,11 @@ format:
   html:
     code-fold: false
     toc: true
-    mermaid:
-      theme: forest
 highlight-style: pygments
 jupyter: python3
-bibliography: ../references.bib
-draft: true
 ---
 
-Data servers hosting GNSS data in RINEX format typically employ Hatanaka-gzip compression to optimize storage. This is becoming [critical as networks and number of GNSS signals grow](../gnss_data_data_volume/index.qmd).
+Data servers hosting GNSS data in RINEX format typically employ Hatanaka-gzip compression to optimize storage. This is becoming [critical as networks and number of GNSS signals grow](../gnss_data_data_volume/index.qmd). While previous efforts have explored [storing data in binary formats like Parquet](../parquet_format_for_gnss_measurements/index.qmd), these formats cannot beat the compression achieved by the highly specialized Hatanaka + gzip combination (`crx.gz` files).
 
 However, users of this data have to make sure that the [hatanaka software](https://terras.gsi.go.jp/ja/crx2rnx.html) is installed in their system. This requirement stems from the need for pre-processing, specifically converting the compressed files (`crx.gz`) to text RINEX files. This pre-processing typically involves the following steps::
 
@@ -29,13 +25,12 @@ However, users of this data have to make sure that the [hatanaka software](https
 
 ![Block diagram of pre-processing of compressed files](hatanakalib.png){width=500px, height=300px}
 
-In programming languages like Python, these steps typically involve calling external tools using the [`subprocess` library](https://docs.python.org/3/library/subprocess.html), essentially executing external programs. These programs often store their output in intermediate files, which are then consumed by subsequent processing steps.
-
-However, the necessity of parsing a text file (uncompressed RINEX, in step 4 above) to load it into memory significantly increases execution time. [While previous efforts have explored storing data in binary formats like Parquet](../parquet_format_for_gnss_measurements/index.qmd), these formats cannot beat the compression achieved by the highly specialized Hatanaka + gzip combination (`crx.gz` files).
+In programming languages like Python, these steps typically involve calling external tools using the [`subprocess` library](https://docs.python.org/3/library/subprocess.html), essentially executing external programs. These programs often store their output in intermediate files, which are then consumed by subsequent processing steps. This multiple writing and parsing (text) files (first Hatanaka file and then uncompress RINEX format) to load it into memory for processinng significantly increases execution time.
 
 To leverage existing GNSS data stored in `crx.gz` format while simplifying pre-processing (reducing dependencies) and accelerating loading times (by eliminating multiple file writes/reads), a refactoring of the Hatanaka software is proposed. This refactoring would facilitate the development of a C extension for Python, optimizing the entire pre-processing pipeline.
 
-Therefore, the main goal of this work is to deploy a software that:
+The main goal of this work is to deploy a software that:
+
 - can be easily installed with a simple `pip install` command and
 - eases the loading of a `crx.gz` file with a single function call (that does not rely under the hood with complex `subprocess` system calls to external programs).
 
@@ -66,7 +61,7 @@ A key benefit of this approach is the potential to
 ::: {.callout-warning}
 ## Experimental feature
 
-The `hatanaka.to_dataframe` feature is currently unavailable on PyPI due to platform-dependent considerations. Deployment mechanisms are still under investigation.
+The `hatanaka.to_dataframe` feature is currently unavailable on `roktools` due to platform-dependent considerations. Deployment mechanisms are still under investigation.
 
 For inquiries, [create an issue to Github](https://github.com/mgfernan/mgfernan.github.io/issues/new) or visit [GNSS R&D channel in X](https://x.com/gnss_research).
 :::
@@ -87,20 +82,20 @@ The data used for this analysis cover:
 
 Three approaches were evaluated for loading the files and measuring their associated loading times:
 
-1. *Direct*. This strategy utilizes the proposed refactoring for direct CRZ loading:
-  1. Uncompress `gz` file and extract the `CRX` (Hatanaka compressed). This
-  uses the built-in `gzip` library
-  2. Direct read of the `CRX` file into a dataframe.
+- *Direct*. This strategy utilizes the proposed refactoring for direct CRZ loading:
+    1. Uncompress `gz` file and extract the `CRX` (Hatanaka compressed). This
+  uses the Python built-in `gzip` library
+    2. Direct read of the `CRX` file into a [`pandas`](https://pandas.pydata.org/) dataframe.
 
-2. *System*. This approach implements the standard processing pipeline mentioned earlier, involving two steps:
-  1. Use system call to `CRZ2RNX` to obtain the RINEX file
-  2. Load the Rinex using the `py-roktools` rinex library
+- *System*. This approach implements the standard processing pipeline mentioned earlier, involving two steps:
+    1. Use system call to `CRZ2RNX` to obtain the RINEX file
+    2. Load the Rinex using the `py-roktools` rinex library
 
-3. Pre-loaded *Parquet*: Assume that RINEX files have been pre-loaded and stored as `parquet` format, as proposed [in a previous work](../parquet_format_for_gnss_measurements/index.qmd). In this step, data is stored in binary format, therefore no parsing needed: just a simple load of a parquet file.
+- Pre-loaded *Parquet*: Assume that RINEX files have been pre-loaded and stored as `parquet` format, as proposed [in a previous work](../parquet_format_for_gnss_measurements/index.qmd). In this step, data is stored in binary format, therefore no parsing is needed: just a simple load of a parquet file (i.e. using the method [`pandas.read_parquet`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html)).
 
 ### Results
 
-THe following figure shows how the loading times compare between these methods. As expected, the *direct* method offers a much faster performance (a consistent 25% of improvement relative to the *system* approach) accross all file sizes.
+The following figure shows how the loading times compare between these methods. As expected, the *direct* method offers a much faster performance (a consistent 25% of improvement relative to the *system* approach) accross all file sizes.
 
 Note that the *parquet* strategy cannot be directly compared to the *direct* and *system* strategies as it is an unfair comparison (i.e. no parsing of text file is performed). However it is provided for completeness, to illustrate the potential benefits of using a binary format to store the data.
 
