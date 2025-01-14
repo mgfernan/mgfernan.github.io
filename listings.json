@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/hatanaka_lib/index.html",
       "/posts/farewell-rokubun/rokubun.html",
       "/posts/parquet_format_for_gnss_measurements/index.html",
       "/posts/gnss_data_data_volume/index.html",
