@@ -1,7 +1,7 @@
 ---
 title: Native integration of Hatanaka for Python
 date: 2025-01-14
-image: hatanakalib.png
+image: image_summary.png
 description: "Native integration of Hatanaka compression in Python via the C-API increases processing speed. Other programming languages such as Rust can also take advantage of this refactoring."
 categories:
   - GNSS
