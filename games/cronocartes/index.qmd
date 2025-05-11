@@ -17,6 +17,8 @@ històrics, però ja veureu com no n'hi ha per a tant! Us divertireu!
 
 [![](https://img.shields.io/badge/enlla%C3%A7_del_joc_a_la-boardgamegeek-orange)](https://boardgamegeek.com/boardgame/326235/cronocartes-historia-de-catalunya)
 
+[![](https://img.shields.io/badge/descarrega't_les_regles_del_joc-aquí-orange)](CRONOCARTES_regles_del_joc.pdf)
+
 ![ ](catalunya_cartes.png)
 
 ## Com es juga
