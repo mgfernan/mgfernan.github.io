@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mgfernan.com/blog.html</loc>
-    <lastmod>2025-05-11T15:11:38.918Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.925Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/cronocartes/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.925Z</lastmod>
-  </url>
-  <url>
     <loc>https://mgfernan.com/games/torneig_cronocartes.html</loc>
-    <lastmod>2025-05-11T15:11:38.925Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/parquet_format_for_gnss_measurements/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.938Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html</loc>
-    <lastmod>2025-05-11T15:11:38.926Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/ticket-to-ride-graph-analysis/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.941Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/farewell-rokubun/rokubun.html</loc>
-    <lastmod>2025-05-11T15:11:38.929Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/codigo-segredo/codigo_segredo.html</loc>
-    <lastmod>2025-05-11T15:11:38.926Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/gnss_data_data_volume/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.934Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/posts/hatanaka_lib/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.935Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mgfernan.com/games/cronocartas/index.html</loc>
-    <lastmod>2025-05-11T15:11:38.920Z</lastmod>
+    <lastmod>2025-07-31T14:39:05.377Z</lastmod>
   </url>
   <url>
     <loc>https://mgfernan.com/games/status.html</loc>
-    <lastmod>2025-05-11T15:11:38.925Z</lastmod>
+    <lastmod>2025-07-31T14:39:05.377Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/gnss_data_data_volume/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.387Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/ticket-to-ride-graph-analysis/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.394Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/2025-07-31_gaussian_processes_primer/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.378Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/codigo-segredo/codigo_segredo.html</loc>
+    <lastmod>2025-07-31T14:39:05.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.377Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/blog.html</loc>
+    <lastmod>2025-07-31T14:39:05.371Z</lastmod>
   </url>
   <url>
     <loc>https://mgfernan.com/about.html</loc>
-    <lastmod>2025-05-11T15:11:38.918Z</lastmod>
+    <lastmod>2025-07-31T14:39:05.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/com-fer-el-teu-cronocartes/Com_fer_el_teu_Cronocartes.html</loc>
+    <lastmod>2025-07-31T14:39:05.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/farewell-rokubun/rokubun.html</loc>
+    <lastmod>2025-07-31T14:39:05.382Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/parquet_format_for_gnss_measurements/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.391Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/posts/hatanaka_lib/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.388Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/cronocartas/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.373Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mgfernan.com/games/cronocartes/index.html</loc>
+    <lastmod>2025-07-31T14:39:05.377Z</lastmod>
   </url>
 </urlset>
