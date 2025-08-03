@@ -306,14 +306,14 @@ f(x) = a\cdot x^2 + b\cdot x + c
 f(x) = -x^3+5\cdot x^2 - \frac{x}{2} -1
 \]</span></p>
 <p>but rather, as a set of probabilistic relationships between the function values. These relationships are provided by the <em>kernel</em>, which quantifies how the values of <span class="math inline">\(f(x)\)</span> for the different inputs (<span class="math inline">\(x\)</span>) are related. The <em>kernel</em> (or set of covariances) is computed based on the training data set. As an example, for the function given above, a possible training dataset could be (see <a href="#fig-fx" class="quarto-xref">Figure&nbsp;1</a>):</p>
-<div id="6e5cfe83" class="cell" data-execution_count="1">
+<div id="e0c681f5" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Importing necessary modules</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="32fa139b" class="cell" data-execution_count="2">
+<div id="0ee4aa80" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x: np.array) <span class="op">-&gt;</span> np.array:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">*</span> np.power(x, <span class="dv">3</span>) <span class="op">+</span> np.power(x, <span class="dv">2</span>) <span class="op">*</span> <span class="dv">5</span> <span class="op">-</span> x <span class="op">*</span> <span class="fl">0.5</span> <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -321,7 +321,7 @@ f(x) = -x^3+5\cdot x^2 - \frac{x}{2} -1
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span>  np.array([<span class="fl">0.</span>       ,<span class="fl">1.67</span> , <span class="fl">3.33</span> ,  <span class="fl">5.0</span>  ])</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> f(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="15ba4006" class="cell" data-execution_count="3">
+<div id="8e662375" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>print training dataset</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>formatter<span class="op">=</span> {<span class="st">'float_kind'</span>: <span class="kw">lambda</span> x: <span class="st">"</span><span class="sc">%7.2f</span><span class="st">"</span> <span class="op">%</span> x}</span>
@@ -378,7 +378,7 @@ Figure&nbsp;1: Example f(x) function with training data set
 f(x) = \{y_1, y_2, y_3, ...y_N\} \quad for \quad x = \{x_1, x_2, x_3, ... x_N\}
 \]</span></p>
 <p>Then we assume that the array <span class="math inline">\(f(x)\)</span> can be modelled as a set of random variables with a Gaussian distribution (i.e.&nbsp;multivariate Gaussian distribution), where the individual data points are <em>not</em> independent (i.e.&nbsp;covariance is not 0). If the points would be independent, this would be equivalent of having <span class="math inline">\(N\)</span> univariate Gaussian random variables (one per each point), as shown in <a href="#fig-independent" class="quarto-xref">Figure&nbsp;2</a>. In this case, each function is in fact <span class="math inline">\(N\)</span> realizations (one per each point) of a Gaussian distribution, and each point is independent to the previous.</p>
-<div id="a17ea709" class="cell" data-execution_count="5">
+<div id="2bd1d4a2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define input points (e.g., 100 evenly spaced points in 1D)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">100</span>)[:, <span class="va">None</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -419,7 +419,7 @@ Figure&nbsp;2: Set of functions drawn from a a multivariate Gaussian distributio
 K({\bf x_1}, {\bf x_2})= \exp \left( -\frac{\| {\bf x_1} - {\bf x_2}\|^2}{2 \sigma^2}\right)
 \]</span></p>
 <p>The Kernel function is defined in the <code>rbf_kernel</code> function below. Note that <span class="math inline">\(\sigma\)</span> controls the smoothnes of the function, the larger the <span class="math inline">\(\sigma\)</span>, the smoother the functions will be, see <a href="#fig-sigma" class="quarto-xref">Figure&nbsp;3</a>.</p>
-<div id="95bf78d4" class="cell" data-execution_count="7">
+<div id="133570f2" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rbf_kernel(x1, x2, sigma<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sqdist <span class="op">=</span> np.<span class="bu">sum</span>(np.power(x1, <span class="dv">2</span>), <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">+</span> np.<span class="bu">sum</span>(np.power(x2, <span class="dv">2</span>), <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(x1, np.transpose(x2))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">/</span> sigma<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> sqdist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -464,7 +464,7 @@ K({\bf x_1}, {\bf x_2})= \exp \left( -\frac{\| {\bf x_1} - {\bf x_2}\|^2}{2 \sig
 <div id="fig-sigma-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-sigma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-sigma-output-1.png" data-ref-parent="fig-sigma" width="810" height="523" class="figure-img">
+<img src="index_files/figure-html/fig-sigma-output-1.png" data-ref-parent="fig-sigma" width="823" height="523" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sigma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Small sigma (sigma=1)
@@ -499,7 +499,7 @@ Figure&nbsp;3: Impact of sigma in Kernel functions
 <h2 class="anchored" data-anchor-id="prediction-without-training">Prediction without training</h2>
 <p>This sections covers the fundamentals of establishing the <strong>predictive/posterior mean and variance</strong> using a fixed <span class="math inline">\(\sigma\)</span> (which is in fact a hyperparameter that will be optimized in a training step shown in the following session). Both the predictive/posterior mean and variance can be obtained using the closed-form analytical expression.</p>
 <p>Let’s use an observation dataset as follows</p>
-<div id="04d36989" class="cell" data-execution_count="9">
+<div id="362a2cba" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> [[<span class="op">-</span><span class="dv">2</span>], [<span class="dv">0</span>], [<span class="dv">1</span>], [<span class="dv">2</span>]]  <span class="co"># List of features</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Y_train <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">1.2</span>, <span class="fl">0.9</span>, <span class="fl">3.3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -520,7 +520,7 @@ Figure&nbsp;3: Impact of sigma in Kernel functions
 <li><span class="math inline">\(\sigma\)</span>, the smoothing factor discussed earlier</li>
 <li><span class="math inline">\(\sigma_n\)</span>, the noise variance, that can be interpreted as the observation noise (controls how much noise it is attributed to the observations)</li>
 </ul>
-<div id="98d1f43d" class="cell" data-execution_count="10">
+<div id="350e5d2b" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyperparameters</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sigma_n <span class="op">=</span> <span class="fl">1e-4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -530,7 +530,7 @@ Figure&nbsp;3: Impact of sigma in Kernel functions
 <ul>
 <li><span class="math inline">\(\hat K\)</span> is computed using <span class="math inline">\(K\)</span>, the covariance matrix using the observed dataset, as follows:</li>
 </ul>
-<div id="ce1d7e6e" class="cell" data-execution_count="11">
+<div id="023bda6f" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute kernel matrix for training points ($\hat K$)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>K_hat <span class="op">=</span> rbf_kernel(X_train, X_train, sigma)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>K_hat <span class="op">+=</span> sigma_n <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))</span>
@@ -539,20 +539,20 @@ Figure&nbsp;3: Impact of sigma in Kernel functions
 <ul>
 <li><span class="math inline">\(x_*\)</span> is the array with the test inputs:</li>
 </ul>
-<div id="d42d8ca2" class="cell" data-execution_count="12">
+<div id="05c29e99" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare Prediction Grid (Test Points)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># Predict at 100 evenly spaced points</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><span class="math inline">\(k_*\)</span> (<code>K_s</code>) is the vector of covariances between the new test points (<span class="math inline">\(x_*\)</span>) and the observed input (<span class="math inline">\(x\)</span>), and is computed as follows:</li>
 </ul>
-<div id="96d86c08" class="cell" data-execution_count="13">
+<div id="b5ae29d1" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>K_s <span class="op">=</span> rbf_kernel(X_train, X_test, sigma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><span class="math inline">\(k(x_*, x_*)\)</span> (<code>K_ss</code>) the covariance of the test input (<span class="math inline">\(x_*\)</span>) with itself</li>
 </ul>
-<div id="a2a8538c" class="cell" data-execution_count="14">
+<div id="25be9db4" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>K_ss <span class="op">=</span> rbf_kernel(X_test, X_test, sigma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
@@ -560,11 +560,11 @@ Figure&nbsp;3: Impact of sigma in Kernel functions
 <li><span class="math inline">\(m(X)\)</span>, the prior mean at the training input, is also commonly considered 0</li>
 </ul>
 <p>Therefore, the predictive/posterior mean at the test points (<span class="math inline">\(\mu_*\)</span>) can be computed as:</p>
-<div id="8dad011b" class="cell" data-execution_count="15">
+<div id="52550e43" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mu_s <span class="op">=</span> K_s.T <span class="op">@</span> K_hat <span class="op">@</span> Y_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And the predictive/posterior covariance at the test points (<span class="math inline">\(\sigma_*^2\)</span>), which will give an indication of the confidence of the prediction, will be computed as:</p>
-<div id="16a4080b" class="cell" data-execution_count="16">
+<div id="e3077a76" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cov_s <span class="op">=</span> K_ss <span class="op">-</span> K_s.T <span class="op">@</span> K_hat <span class="op">@</span> K_s  <span class="co"># Shape: (100,100)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>std_s <span class="op">=</span> np.sqrt(np.diag(cov_s))     <span class="co"># Predictive standard deviation (sigma)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -607,7 +607,7 @@ Figure&nbsp;4: GP regression with fixed hyperparameters
 <h2 class="anchored" data-anchor-id="prediction-with-training">Prediction with training</h2>
 <p>This section will cover the usage of <a href="https://scikit-learn.org"><code>sklearn</code> package</a> in order to train the Gaussian Process and obtain a refined set of hyperparameters that minimises the root mean squared error (RMSE).</p>
 <p>As the kernel function, we will use <code>sklearn</code>’s <code>RBF</code> class, which actually implements the <code>rbf_kernel</code> function shown above. Note that in the <code>GaussianProcessRegressor</code> class, it is possible to specify the <code>alpha</code> parameter, which can be interpreted as the variance of a Gaussian noise (<span class="math inline">\(\sigma_n\)</span>).</p>
-<div id="1efbdeeb" class="cell" data-execution_count="18">
+<div id="712577be" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> RBF</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -619,7 +619,7 @@ Figure&nbsp;4: GP regression with fixed hyperparameters
 <pre><code>1.79**2 * RBF(length_scale=0.664)</code></pre>
 </div>
 </div>
-<div id="1e30d670" class="cell" data-execution_count="19">
+<div id="f4b23203" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mu_s_hyper, std_s_hyper <span class="op">=</span> gaussian_process.predict(X_test, return_std<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In <a href="#fig-training" class="quarto-xref">Figure&nbsp;5</a>, the result of this training is being shown (in addition, the result using manual training is also provided for reference). Note that in the positions of the training data set, there is also a certain uncertainty level that matches the <span class="math inline">\(\sigma_n\)</span> value specified before. If this value is increased, the uncertainty level of the prediction will increase accordingly.</p>
