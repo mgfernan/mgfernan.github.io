@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/particle_filter.html",
       "/posts/2025-07-31_gaussian_processes_primer/index.html",
       "/posts/hatanaka_lib/index.html",
       "/posts/farewell-rokubun/rokubun.html",
