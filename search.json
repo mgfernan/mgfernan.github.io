@@ -151,7 +151,7 @@
     "href": "posts/particle_filter.html",
     "title": "Particle filter demo: 2D rover position and velocity",
     "section": "",
-    "text": "This demo serves as demonstration on how to use the particle filter module shipped within this repository. The notebook simulates a rover moving in 2D with constant-velocity dynamics and range measurements to fixed beacons. We will:"
+    "text": "This demo serves as demonstration on how to use the particle filter module shipped within the pygnss package. The notebook simulates a rover moving in 2D with constant-velocity dynamics and range measurements to fixed beacons. We will:"
   },
   {
     "objectID": "posts/particle_filter.html#particle-filters-brief-introduction",
