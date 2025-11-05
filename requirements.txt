@@ -3,6 +3,7 @@ matplotlib
 numpy
 pandas
 plotly
+pygnss>=1.2.0
 roktools==6.8.0
 scikit-learn
 tabulate
